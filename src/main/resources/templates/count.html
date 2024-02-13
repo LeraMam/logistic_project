@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	  <div th:insert="~{/fragments/headLinks :: head_fragment}"></div>
+	  <script>
+		  $(document).ready(() => {
+			  $('#goodsCountForm').submit(event => {
+				  event.preventDefault();
+				  const body = {};
+				  console.log($('#goodsCountForm').serializeArray())
+				  $.each($('#goodsCountForm').serializeArray(), (i, field) => {
+					  body[field.name] = field.value;
+				  })
+				  ajaxPOSTWithoutResponse('/count/get', body, () => {
+					  //window.location.href = '/catalog'
+				  })
+			  });
+		  });
+	  </script>
+
+  </head>
+  <body>
+
+  <div th:replace="~{/fragments/header :: header}"></div>
+  <div th:replace="~{/fragments/top_fragment :: top_fragment}"></div>
+    <section class="ftco-section" >
+    	<div class="container" >
+    		<div class="row justify-content-center" >
+					<div class="col-md-12" >
+						<div class="wrapper" >
+							<div class="row no-gutters mb-5" >
+								<div class="col-md-7" >
+									<div class="contact-wrap w-100 p-md-5 p-4" > <!--w-100 размер всей этой хрени -->
+										<h3 class="mb-4">Рассчет стоимости перевозки</h3>
+										<form id="goodsCountForm" name="goodsCountForm" class="goodsCountForm" >
+											<p class="label">Выберите способ доставки</p>
+											<input type="radio" id="l1" name="deliveryType" value="Все">
+											<label for="l1">Все</label>
+											<input type="radio" id="l2" name="deliveryType" value="Море">
+											<label for="l2">Море</label>
+											<input type="radio" id="l3" name="deliveryType" value="Железная дорога">
+											<label for="l3">Железная дорога</label>
+											<input type="radio" id="l4" name="deliveryType" value="Авто">
+											<label for="l4">Авто</label>
+											<input type="radio" id="l5" name="deliveryType" value="Воздух">
+											<label for="l5">Воздух</label>
+											<input type="radio" id="l6" name="deliveryType" value="Навалочный груз">
+											<label for="l6">Навалочный груз</label>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="label" for="goodType">Тип товара</label>
+														<input type="text" class="form-control" name="goodType" id="goodType" placeholder="Тип товара">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="label" for="weight">Вес груза</label>
+														<input type="text" class="form-control" name="weight" id="weight" placeholder="Вес груза">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="label" for="startPoint">Точка отправления</label>
+														<input type="text" class="form-control" name="startPoint" id="startPoint" placeholder="Точка отправления">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="label" for="endPoint">Точка прибытия</label>
+														<input type="text" class="form-control" name="endPoint" id="endPoint" placeholder="Точка прибытия">
+													</div>
+												</div>
+												<input type="submit" value="Рассчитать" class="btn btn-primary">
+											</div>
+
+										</form>
+									</div>
+								</div>
+								</form>
+								</div>
+							</div>
+					</div>
+			</div>
+		</div>
+		</div>
+		</div>
+    </section>
+
+	<section class="ftco-section">
+		<div class="container" >
+			<div class="row justify-content-center" >
+				<div class="col-md-9" >
+					<h3 class="mb-4">Грузоперевозчики</h3>
+					<div class="wrapper" >
+						<table class="table">
+							<tr>
+								<th>Заголовок 1</th>
+								<th>Заголовок 2</th>
+								<th>Заголовок 3</th>
+								<th>Заголовок 4</th>
+							</tr>
+							<tr>
+								<td>Ячейка 1-1</td>
+								<td>Ячейка 1-2</td>
+								<td>Ячейка 1-3</td>
+								<td>Ячейка 1-4</td>
+							</tr>
+							<tr>
+								<td>Ячейка 2-1</td>
+								<td>Ячейка 2-2</td>
+								<td>Ячейка 2-3</td>
+								<td>Ячейка 2-4</td>
+							</tr>
+							<tr>
+								<td>Ячейка 3-1</td>
+								<td>Ячейка 3-2</td>
+								<td>Ячейка 3-3</td>
+								<td>Ячейка 3-4</td>
+							</tr>
+							<tr>
+								<td>Ячейка 4-1</td>
+								<td>Ячейка 4-2</td>
+								<td>Ячейка 4-3</td>
+								<td>Ячейка 4-4</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+	</section>
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+  </body>
+</html>
