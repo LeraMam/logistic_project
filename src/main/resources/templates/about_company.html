@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!--план на страницу: сделать всплывающее окошко редактирования и создания наших данных,
+например: две кнопки: создать и редактировать, каждая будет видна при своем условии: если для этого
+аккаунта нет записи в таблице с компаниями, то активна "создать портфолио", иначе - "изменить портфолио"
+для кажой кнопик будет всплывающее окно, а на самой страничке будет портфолио компании-->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -10,68 +14,73 @@
   <div th:replace="~{/fragments/header :: header}"></div>
 
   <div th:replace="~{/fragments/top_fragment :: top_fragment}"></div>
-   	
+
     <section class="ftco-section">
     	<div class="container">
     		<div class="row">
-    			<div class="col-md-8">
+    			<div class="col-md-9">
     				<h5 class="font-weight-bold">Home Builder</h5>
     				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-    				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-    			</div>
-    			<div class="col-md-4">
     				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
     			</div>
     		</div>
     	</div>
     </section>
 
-    <section class="ftco-section ftco-no-pb ftco-no-pt mb-5">
-      <div class="container">
-      	<div class="row">
-	      	<div class="col-md-12">
-	      		<div class="bg-primary w-100 rounded px-md-0 px-4">
-			        <div class="row d-flex justify-content-center">
-			        	<div class="col-lg-8 py-4">
-			        		<div class="row">
-					          <div class="col-md-6 d-flex align-items-center">
-					            <h2 class="mb-0" style="color:white; font-size: 24px;">Subcribe to our Newsletter</h2>
-					          </div>
-					          <div class="col-md-6 d-flex align-items-center">
-					            <form action="#" class="subscribe-form">
-					              <div class="form-group d-flex">
-					                <input type="text" class="form-control" placeholder="Enter email address">
-					                <input type="submit" value="Subscribe" class="submit px-3">
-					              </div>
-					            </form>
-					          </div>
-				          </div>
-			          </div>
-			        </div>
-			      </div>
-			    </div>
+  <!-- Book Modal -->
+ <!-- <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			  <div class="modal-header">
+				  <h5 class="modal-title" id="bookModalLabel">Добавить книгу</h5>
 			  </div>
-      </div>
-    </section>
 
+			  <form id="bookForm">
+				  <div class="modal-body">
+
+					  <label>Название</label>
+					  <input class="form-control" id="bookModalBookName" type="text" placeholder="Название книги"
+							 required value="asdf"/><br>
+
+					  <label>Авторы</label>
+					  <select id="bookModalAuthorsSelect" name="authors" title="Выберите авторов" data-style="btn-default"
+							  class="selectpicker form-control" multiple>
+
+					  </select><br><br>
+
+					  <label>Категории</label>
+					  <select id="bookModalCategorySelect" title="Выберите категории" data-style="btn-default"
+							  class="selectpicker form-control" multiple>
+
+					  </select><br><br>
+
+					  <label>Издательство</label>
+					  <select id="bookModalPublisherSelect" title="Выберите издательство" data-style="btn-default"
+							  class="selectpicker form-control">
+
+					  </select><br><br>
+
+					  <label>Год издания</label>
+					  <input class="form-control" id="bookModalBookYear" type="number" placeholder="Год издания"
+							 required value="1"/><br>
+
+					  <label>Цена</label>
+					  <input class="form-control col-" id="bookModalBookPriceRub" type="number"
+							 step="0.01" min="0" placeholder="0,00" required value="1"/>
+				  </div>
+				  <div class="modal-footer">
+					  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					  <button id="bookSubmit" type="submit" class="btn success">Save changes</button>
+				  </div>
+			  </form>
+		  </div>
+	  </div>
+  </div>
+-->
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
+  <div th:insert="~{/fragments/headLinks :: script_fragment}"></div>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
-  <script src="js/main.js"></script>
-    
   </body>
 </html>

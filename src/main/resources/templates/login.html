@@ -12,24 +12,74 @@
 
   <div th:replace="~{/fragments/top_fragment :: top_fragment}"></div>
 
+  <section style="margin-top: -60px; margin-bottom: 90px" class="ftco-section" >
+    <div class="container" >
+      <div class="row justify-content-center" >
+        <div class="col-md-6" >
+          <div class="wrapper" >
+            <div class="row no-gutters mb-5" >
+              <div class="col-md-7" >
+                <div style="width: 400px" class="contact-wrap p-md-5 p-4" > <!--w-100 размер всей этой хрени -->
+                  <h3 class="mb-4"> Вход</h3>
+                  <form id="loginForm" name="loginForm" class="loginForm" >
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="label" for="login">Логин</label>
+                          <input type="text" class="form-control" name="login" id="login" placeholder="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="label" for="password">Пароль</label>
+                          <input type="text" class="form-control" name="password" id="password" placeholder="">
+                        </div>
+                      </div>
+                      <input type="submit" value="Рассчитать" class="btn btn-primary">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6" >
+          <div class="wrapper" >
+            <div class="row no-gutters mb-5" >
+              <div class="col-md-7" >
+                <div style="width: 400px" class="contact-wrap p-md-5 p-4" >
+                  <h3 class="mb-4">Регистрация</h3>
+                  <form id="registrationForm" name="registrationForm" class="registrationForm" >
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="label" for="regLogin">Логин</label>
+                          <input type="text" class="form-control" name="regLogin" id="regLogin" placeholder="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="label" for="regPassword">Пароль</label>
+                          <input type="text" class="form-control" name="regPassword" id="regPassword" placeholder="">
+                        </div>
+                      </div>
+                      <input type="submit" value="Рассчитать" class="btn btn-primary">
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
+  <div th:insert="~{/fragments/headLinks :: script_fragment}"></div>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
-  <script src="js/main.js"></script>
-    
   </body>
 </html>
