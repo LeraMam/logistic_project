@@ -8,6 +8,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <div th:insert="~{/fragments/headLinks :: head_fragment}"></div>
+      <link href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" />
+      <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+      <script th:src="@{/js/about_company.js}"></script>
   </head>
   <body>
 
@@ -15,68 +18,93 @@
 
   <div th:replace="~{/fragments/top_fragment :: top_fragment}"></div>
 
-    <section class="ftco-section">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-md-9">
-    				<h5 class="font-weight-bold">Home Builder</h5>
-    				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-    				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-    			</div>
-    		</div>
-    	</div>
-    </section>
-
-  <!-- Book Modal -->
- <!-- <div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-		  <div class="modal-content">
-			  <div class="modal-header">
-				  <h5 class="modal-title" id="bookModalLabel">Добавить книгу</h5>
-			  </div>
-
-			  <form id="bookForm">
-				  <div class="modal-body">
-
-					  <label>Название</label>
-					  <input class="form-control" id="bookModalBookName" type="text" placeholder="Название книги"
-							 required value="asdf"/><br>
-
-					  <label>Авторы</label>
-					  <select id="bookModalAuthorsSelect" name="authors" title="Выберите авторов" data-style="btn-default"
-							  class="selectpicker form-control" multiple>
-
-					  </select><br><br>
-
-					  <label>Категории</label>
-					  <select id="bookModalCategorySelect" title="Выберите категории" data-style="btn-default"
-							  class="selectpicker form-control" multiple>
-
-					  </select><br><br>
-
-					  <label>Издательство</label>
-					  <select id="bookModalPublisherSelect" title="Выберите издательство" data-style="btn-default"
-							  class="selectpicker form-control">
-
-					  </select><br><br>
-
-					  <label>Год издания</label>
-					  <input class="form-control" id="bookModalBookYear" type="number" placeholder="Год издания"
-							 required value="1"/><br>
-
-					  <label>Цена</label>
-					  <input class="form-control col-" id="bookModalBookPriceRub" type="number"
-							 step="0.01" min="0" placeholder="0,00" required value="1"/>
-				  </div>
-				  <div class="modal-footer">
-					  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					  <button id="bookSubmit" type="submit" class="btn success">Save changes</button>
-				  </div>
-			  </form>
-		  </div>
-	  </div>
+  <div class="col-sm-9" style="margin-left: auto; margin-right: auto; margin-top: 20px">
+      <input type="submit" value="Создать портфолио"  id="createBookBtn" class="btn btn-primary">
   </div>
--->
+
+  <section class="">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-6">
+                  <h5 class="font-weight-bold">Home Builder</h5>
+                  <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                  <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+              </div>
+
+              <div class="col-md-4" >
+                  <div class="wrapper" style="margin-left: 40px">
+                      <table class="table">
+                          <tr>
+                              <th>Вид транспорта</th>
+                              <th>Тариф</th>
+                          </tr>
+                          <tr>
+                              <td>Ячейка 1-1</td>
+                              <td>Ячейка 1-2</td>
+                          </tr>
+                      </table>
+                  </div>
+              </div>
+          </div>на
+      </div>
+  </section>
+
+  <div class="modal fade" id="companyModal" tabindex="-1" role="dialog" aria-labelledby="companyModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="companyModalLabel">Создать портфолио</h5>
+              </div>
+              <form id="companyForm">
+                  <div class="modal-body">
+                      <!--<div class="row">
+                          <div class="col-sm-4">
+                              <div class="product-image-wrapper">
+                                  <div class="single-products">
+                                      <div class="productinfo text-center">
+                                          <img id="imagePreview" alt=""> &lt;!&ndash;логотип???&ndash;&gt;
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>-->
+                      <label for="companyModalName">Название</label>
+                      <input class="form-control" id="companyModalName" type="text" placeholder="Название компании" required value=""/><br>
+
+                      <label for="companyModalContact">E-mail</label>
+                      <input class="form-control" id="companyModalContact" type="text" placeholder="E-mail" required value=""/><br>
+
+                      <label for="companyModalTypes">Выберите тип перевозки:</label>  <!--сделать возможность выбора только одной?
+                      или сделать так, чтобы можно было ввести тарифы под каждый тип перевозки
+                      как вариант, считать из бд виды транспорта у компании и вывести в таблице их,
+                      внутри ее предоставить кнопки для изменения тарифов на каждый вид транспорта
+                      можно задать значение по умолчанию для тарифа там в базовую величину или типа того
+                      у пользователя на тип перевозки надо сделать select, чтобы для выборки можно было выбрать-->
+                      <select id="companyModalTypes" name="companyModalTypes" class="form-control" multiple >
+                          <option value="all">Все</option>
+                          <option value="sea">Море</option>
+                          <option value="railway">Железная дорога</option>
+                          <option value="auto">Авто</option>
+                          <option value="air">Воздух</option>
+                          <option value="bc">Навалочный груз</option>
+                      </select><br>
+
+                      <label for="companyModalDescription">Описание</label>
+                      <textarea class="form-control" id="companyModalDescription" type="text" placeholder="Общая информация о компании" required value=""></textarea><br>
+
+                      <label>Тариф</label>
+                      <input class="form-control" id="companyModalPrice" type="text" placeholder="" required value=""/><br>
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button id="bookSubmit" type="submit" class="btn success">Save changes</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 

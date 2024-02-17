@@ -13,7 +13,7 @@
 				  $.each($('#goodsCountForm').serializeArray(), (i, field) => {
 					  body[field.name] = field.value;
 				  })
-				  ajaxPOSTWithoutResponse('/count/get', body, () => {
+				  ajaxPOSTWithoutResponse('/count', body, () => {
 					  //window.location.href = '/catalog'
 				  })
 			  });

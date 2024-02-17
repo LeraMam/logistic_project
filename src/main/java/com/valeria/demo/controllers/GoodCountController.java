@@ -17,8 +17,8 @@ public class GoodCountController {
         this.goodsService = goodsService;
     }
 
-    @PostMapping("/get")
-    public void getCountDate(@RequestBody GoodsEntity goodsEntity){
+    @PostMapping
+    public void addCountDate(@RequestBody GoodsEntity goodsEntity){
         System.out.println(goodsEntity);
         goodsService.addNewGoods(goodsEntity);
     }

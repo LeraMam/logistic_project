@@ -317,6 +317,17 @@ h5, .h5 {
 h6, .h6 {
   font-size: 1rem; }
 
+/* Изменение цвета выбранных элементов селекта */
+.choices__list--multiple .choices__item.is-highlighted{
+  background-color:#fdbe33 !important;
+  border:1px solid #fdbe33 !important;
+}
+
+.choices__list--multiple .choices__item{
+  background-color:#fdbe33 !important;
+  border:1px solid #fdbe33 !important;
+  }
+
 .lead {
   font-size: 1.25rem;
   font-weight: 300; }
