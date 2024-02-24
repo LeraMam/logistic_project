@@ -19,7 +19,7 @@
   <div th:replace="~{/fragments/top_fragment :: top_fragment}"></div>
 
   <div class="col-sm-9" style="margin-left: auto; margin-right: auto; margin-top: 20px">
-      <input type="submit" value="Создать портфолио"  id="createBookBtn" class="btn btn-primary">
+      <input type="submit" value="Создать портфолио"  id="createCompanyBtn" class="btn btn-primary">
   </div>
 
   <section class="">
@@ -32,11 +32,12 @@
               </div>
 
               <div class="col-md-4" >
+
                   <div class="wrapper" style="margin-left: 40px">
                       <table class="table">
                           <tr>
                               <th>Вид транспорта</th>
-                              <th>Тариф</th>
+                              <th>Тариф  <i class="fa fa-plus-circle" id="createTariffBtn" style="color: #ffc107"></i></th>
                           </tr>
                           <tr>
                               <td>Ячейка 1-1</td>
@@ -45,7 +46,7 @@
                       </table>
                   </div>
               </div>
-          </div>на
+          </div>
       </div>
   </section>
 
@@ -74,27 +75,51 @@
                       <label for="companyModalContact">E-mail</label>
                       <input class="form-control" id="companyModalContact" type="text" placeholder="E-mail" required value=""/><br>
 
-                      <label for="companyModalTypes">Выберите тип перевозки:</label>  <!--сделать возможность выбора только одной?
-                      или сделать так, чтобы можно было ввести тарифы под каждый тип перевозки
-                      как вариант, считать из бд виды транспорта у компании и вывести в таблице их,
-                      внутри ее предоставить кнопки для изменения тарифов на каждый вид транспорта
-                      можно задать значение по умолчанию для тарифа там в базовую величину или типа того
-                      у пользователя на тип перевозки надо сделать select, чтобы для выборки можно было выбрать-->
+                     <!-- <label for="companyModalTypes">Выберите тип перевозки:</label>
                       <select id="companyModalTypes" name="companyModalTypes" class="form-control" multiple >
-                          <option value="all">Все</option>
-                          <option value="sea">Море</option>
-                          <option value="railway">Железная дорога</option>
-                          <option value="auto">Авто</option>
-                          <option value="air">Воздух</option>
-                          <option value="bc">Навалочный груз</option>
-                      </select><br>
+                          <option value="ALL">Все</option>
+                          <option value="SEA">Море</option>
+                          <option value="RAILWAY">Железная дорога</option>
+                          <option value="AUTO">Авто</option>
+                          <option value="AIR">Воздух</option>
+                          <option value="BC">Навалочный груз</option>
+                      </select><br>-->
 
                       <label for="companyModalDescription">Описание</label>
                       <textarea class="form-control" id="companyModalDescription" type="text" placeholder="Общая информация о компании" required value=""></textarea><br>
 
-                      <label>Тариф</label>
+                     <!-- <label>Тариф</label>
                       <input class="form-control" id="companyModalPrice" type="text" placeholder="" required value=""/><br>
+-->
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button id="companySubmit" type="submit" class="btn success">Save changes</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
 
+  <div class="modal fade" id="tariffModal" tabindex="-1" role="dialog" aria-labelledby="companyModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="tariffModalLabel">Создать портфолио</h5>
+              </div>
+              <form id="tariffForm">
+                  <div class="modal-body">
+                       <label for="tariffModalTypes">Выберите тип перевозки:</label>
+                       <select id="tariffModalTypes" name="tariffModalTypes" class="form-control" >
+                           <option value="SEA">Море</option>
+                           <option value="RAILWAY">Железная дорога</option>
+                           <option value="AUTO">Авто</option>
+                           <option value="AIR">Воздух</option>
+                           <option value="BC">Навалочный груз</option>
+                       </select><br>
+
+                       <label>Тариф</label>
+                       <input class="form-control" id="tariffModalPrice" type="text" placeholder="" required value=""/><br>
                   </div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -110,5 +135,6 @@
 
   <div th:insert="~{/fragments/headLinks :: script_fragment}"></div>
 
+  <div th:insert="~{/fragments/footer :: footer}"></div>
   </body>
 </html>

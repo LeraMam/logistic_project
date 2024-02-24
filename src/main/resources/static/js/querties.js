@@ -40,7 +40,7 @@ const ajaxPOST = (url, body, onSuccess = () => {
         url: url,
         data: JSON.stringify(body),
         contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        dataType: "json",   //ожидает ответ от сервера в json формате
         encode: true,
         success: onSuccess,
         error: defaultErrorHandler,

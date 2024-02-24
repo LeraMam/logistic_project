@@ -1,14 +1,22 @@
 package com.valeria.demo.controllers;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.valeria.demo.db.entity.CompanyEntity;
+import com.valeria.demo.services.CompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/about")
 public class CompanyController {
-    @PostMapping
-    public void addCompany(){
-        System.out.println();
+    private final CompanyService companyService;
+
+    @Autowired
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
+    @PostMapping("/company")
+    public void addCompany(@RequestBody CompanyEntity companyEntity){
+        System.out.println(companyEntity);
+        companyService.addNewCompany(companyEntity);
     }
 }

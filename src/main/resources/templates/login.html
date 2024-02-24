@@ -19,23 +19,23 @@
           <div class="wrapper" >
             <div class="row no-gutters mb-5" >
               <div class="col-md-7" >
-                <div style="width: 400px" class="contact-wrap p-md-5 p-4" > <!--w-100 размер всей этой хрени -->
-                  <h3 class="mb-4"> Вход</h3>
-                  <form id="loginForm" name="loginForm" class="loginForm" >
+                <div style="width: 500px" class="contact-wrap p-md-5 p-4" > <!--w-100 размер всей этой хрени -->
+                  <h3 class="mb-4"> Войти как пользователь</h3>
+                  <form id="userForm" name="userForm" class="userForm" >
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="label" for="login">Логин</label>
-                          <input type="text" class="form-control" name="login" id="login" placeholder="">
+                          <label class="label" for="userLogin">Логин</label>
+                          <input type="text" class="form-control" name="userLogin" id="userLogin" placeholder="">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="label" for="password">Пароль</label>
-                          <input type="text" class="form-control" name="password" id="password" placeholder="">
+                          <label class="label" for="userPassword">Пароль</label>
+                          <input type="text" class="form-control" name="userPassword" id="userPassword" placeholder="">
                         </div>
                       </div>
-                      <input type="submit" value="Рассчитать" class="btn btn-primary">
+                      <input id="userButton" type="submit" value="Войти" class="btn btn-primary">
                     </div>
                   </form>
                 </div>
@@ -48,23 +48,23 @@
           <div class="wrapper" >
             <div class="row no-gutters mb-5" >
               <div class="col-md-7" >
-                <div style="width: 400px" class="contact-wrap p-md-5 p-4" >
-                  <h3 class="mb-4">Регистрация</h3>
-                  <form id="registrationForm" name="registrationForm" class="registrationForm" >
+                <div style="width: 500px" class="contact-wrap p-md-5 p-4" >
+                  <h3 class="mb-4">Войти как грузоперевозчик</h3>
+                  <form id="companyForm" name="companyForm" class="companyForm" >
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="label" for="regLogin">Логин</label>
-                          <input type="text" class="form-control" name="regLogin" id="regLogin" placeholder="">
+                          <label class="label" for="companyLogin">Логин</label>
+                          <input type="text" class="form-control" name="companyLogin" id="companyLogin" placeholder="">
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label class="label" for="regPassword">Пароль</label>
-                          <input type="text" class="form-control" name="regPassword" id="regPassword" placeholder="">
+                          <label class="label" for="companyPassword">Пароль</label>
+                          <input type="text" class="form-control" name="companyPassword" id="companyPassword" placeholder="">
                         </div>
                       </div>
-                      <input type="submit" value="Рассчитать" class="btn btn-primary">
+                      <input id="companyButton" type="submit" value="Войти" class="btn btn-primary">
                     </div>
                   </form>
               </div>
@@ -81,5 +81,6 @@
 
   <div th:insert="~{/fragments/headLinks :: script_fragment}"></div>
 
+  <div th:insert="~{/fragments/footer :: footer}"></div>
   </body>
 </html>
