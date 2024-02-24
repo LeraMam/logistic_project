@@ -22,6 +22,6 @@ public class CompanyEntity {
     /*@Enumerated(EnumType.STRING)
     private List<TransportationType> type = new ArrayList<>();*/
     private String description;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TariffEntity> tariff = new ArrayList<>();
 }

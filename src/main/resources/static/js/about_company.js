@@ -9,22 +9,32 @@ const extractSingleSelectedItem = (selectId) => {//извлечение данн
     return selected ? selected : null;
 }
 
+const companyBlock = (company) => {
+    const name = $('<h4 class="font-weight-bold">' + company.name + '</h4>');
+    const email = $('<h6 class="font-weight-bold">' + company.email + '</h6>');
+    const description = $('<p>' + company.description + '</p>');
+    $('#companyInfoBlock').append(name, email, description);
+}
+
 const openCompanyModal = (company = null, submitAction = (company) => {
 }) => {
-    $('#companyModal').modal('show')
-    /*if (!company) {
-        $('#bookModalBookImage').prop('required', true)
-        $('#bookModalLabel').text('Добавить книгу')
+   /* console.log('С сервера приходит это: ');
+    console.log(company);*/
+    if (!company.name && !company.email && !company.description) {
+        $('#companyModalLabel').text('Создать портфолио')
     } else {
-        $('#bookModalBookImage').prop('required', false)
-        $('#bookModalLabel').text('Изменить книгу: ' + company.name)
-    }*/
+        $('#companyModalLabel').text('Изменить портфолио: ' + company.name)
+    }
     company = company ? company : {};
 
     /*ajaxGET('/api/meta', data => { //это для заполнения формы при редактировании
         $('#bookModalBookName').val(company.name);
         $('#bookModal').modal('show')
     })*/
+    $('#companyModalName').val(company.name);
+    $('#companyModalContact').val(company.email);
+    $('#companyModalDescription').val(company.description);
+    $('#companyModal').modal('show')
 
     $('#companyForm').submit((event) => {
         event.preventDefault();
@@ -44,62 +54,65 @@ const openCompanyModal = (company = null, submitAction = (company) => {
 
 const openTariffModal = (tariff = null, submitAction = (tariff) => {
 }) => {
-    $('#tariffModal').modal('show')
-    /*if (!company) {
-        $('#bookModalBookImage').prop('required', true)
-        $('#bookModalLabel').text('Добавить книгу')
+    if (!tariff.type && !tariff.price ) {
+        $('#tariffModalLabel').text('Добавить тариф')
     } else {
-        $('#bookModalBookImage').prop('required', false)
-        $('#bookModalLabel').text('Изменить книгу: ' + company.name)
-    }*/
+        $('#tariffModalLabel').text('Изменить тариф')
+    }
     tariff = tariff ? tariff : {};
 
-    /*ajaxGET('/api/meta', data => { //это для заполнения формы при редактировании
-        $('#bookModalBookName').val(company.name);
-        $('#bookModal').modal('show')
-    })*/
+    $('#tariffModalTypes').val(tariff.type);
+    $('#tariffModalPrice').val(tariff.price);
 
+    $('#tariffModal').modal('show')
     $('#tariffForm').submit((event) => {
         event.preventDefault();
-        tariff.type = extractSingleSelectedItem('tariffModalTypes');
-        tariff.price = Number.parseFloat($('#tariffModalPrice').val());
-        submitAction(tariff);
-        console.log(tariff);
+        const newTariff = {};
+        newTariff.type = extractSingleSelectedItem('tariffModalTypes');
+        newTariff.price = Number.parseFloat($('#tariffModalPrice').val());
+        submitAction(newTariff);
+        console.log(newTariff);
         $('#tariffModal').modal('hide');
     })
 }
 
 $(document).ready(() => {
-    $('#createCompanyBtn').click(() => {
-        openCompanyModal(null, (company) => {
-            ajaxPOSTWithoutResponse('/about/company', company, () => {
-                 showMessage("Портфолио создано", 1000, () => {
-                     //reloadBooks();
-                 })
-             })
-        });
-    })
-    $('#createTariffBtn').click(() => {
-        openTariffModal(null, (tariff) => {
-            ajaxPOSTWithoutResponse('/about/tariff', tariff, () => {
-                showMessage("Тариф создан", 1000, () => {
-                    //reloadBooks();
+    function getCookie() {
+        return document.cookie.split('; ').reduce((acc, item) => {
+            const [name, value] = item.split('=')
+            acc[name] = value
+            return acc
+        }, {})
+    }
+    const cookie = getCookie()
+    /*console.log(cookie.userId)*/
+    ajaxGET('/login/' + cookie.userId, user => {
+        console.log('На ходе имеем');
+        console.log(user.company);
+        console.log(user.company.tariff);
+        console.log('Получаем потом');
+
+        companyBlock(user.company);
+
+        $('#createCompanyBtn').click(() => {
+            openCompanyModal(user.company, (company) => {
+                ajaxPOSTWithoutResponse('/about/company', company, () => {
+                    showMessage("Портфолио создано", 1000, () => {
+                        //reloadBooks();
+                    })
                 })
-            })
-        });
+            });
+        })
+        $('#createTariffBtn').click(() => {
+            openTariffModal(user.company.tariff, (tariff) => {
+                ajaxPOSTWithoutResponse('/about/tariff/' + user.id, tariff, () => {
+                    showMessage("Тариф создан", 1000, () => {
+                        //reloadBooks();
+                    })
+                })
+            });
+        })
     })
 })
 
-/*$(document).ready(function(){
-    var multipleCancelButton = new Choices('#tariffModalTypes', {
-        removeItemButton: true,
-        maxItemCount:5,
-        searchResultLimit:5,
-        renderChoiceLimit:5
-    });
-});*/
-
-$(document).ready(() => {
-
-});
 

@@ -14,9 +14,9 @@ public class TariffController {
         this.tariffService = tariffService;
     }
 
-    @PostMapping("/tariff")
-    public void addTariff(@RequestBody TariffEntity tariffEntity){
+    @PostMapping("/tariff/{companyId}")
+    public void addTariff(@PathVariable Long companyId, @RequestBody TariffEntity tariffEntity){
         System.out.println(tariffEntity);
-        tariffService.addNewTariff(tariffEntity);
+        tariffService.addNewTariff(companyId, tariffEntity);
     }
 }

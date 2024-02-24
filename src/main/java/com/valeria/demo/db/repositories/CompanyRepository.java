@@ -5,5 +5,5 @@ import com.valeria.demo.db.entity.GoodsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CompanyRepository  extends JpaRepository<CompanyEntity, Long> {
-
+    CompanyEntity findCompanyEntityById(Long id);
 }

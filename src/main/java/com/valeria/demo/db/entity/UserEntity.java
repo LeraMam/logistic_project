@@ -20,6 +20,6 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private UserRole role;
     private String password;
-    /*@OneToOne
-    private CompanyEntity company;*/
+    @OneToOne
+    private CompanyEntity company;
 }
