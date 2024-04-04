@@ -32,37 +32,17 @@ public class UserController {
     public UserEntity getUserByAuth(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        System.out.println("username from autentificate");
-        System.out.println(username);
+        /*System.out.println("username from autentificate");
+        System.out.println(username);*/
         Optional<UserEntity> loginUser = userService.getUserByLogin(username);
         UserEntity user = loginUser.get();
-        System.out.println(user);
+        /*System.out.println(user);*/
         return user;
-        /*return userService.getUserById(id);*/
     }
-/*
-
-    @PostMapping("/sign")
-    public ModelAndView loginUser(@RequestBody UserEntity user){
-        System.out.println(user);
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().isAuthenticated());
-        ModelAndView modelAndView = new ModelAndView();
-        String name = "Count";
-        modelAndView.addObject("pageTitle", name);
-        modelAndView.setViewName("count");
-        return modelAndView;
-    }
-*/
 
     @PostMapping("/register")
-    public UserEntity registerUser(@RequestBody UserEntity user, HttpServletResponse response){
-        /*System.out.println(user);*/
-        /*Cookie cookie = new Cookie("userId", result.getId().toString());
-        cookie.setPath("/");
-        response.addCookie(cookie);*/
+    public UserEntity registerUser(@RequestBody UserEntity user){
         UserEntity savedUser = userService.addNewUser(user);
-        /*securityService.autoLogin(user.getLogin(), user.getPassword());*/
-        /*System.out.println(SecurityContextHolder.getContext().getAuthentication().isAuthenticated());*/
         return savedUser;
     }
 }

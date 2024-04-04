@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        System.out.println("loadUserByUsername: "+login);
+        /*System.out.println("loadUserByUsername: "+login);*/
         UserEntity user = userRepository.findUserEntityByLogin(login).orElseThrow(() ->
                 new UsernameNotFoundException("Пользователь с заданным логином не существует"));
         System.out.println(user);

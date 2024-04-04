@@ -18,16 +18,21 @@ const companyBlock = (company) => {
 const tariffsTable = (userId) => {
     ajaxGET('/about/tariff/' + userId, tariffs => {
         /*$('#tariffsTable').empty();*/
-        console.log("tarrifs: ")
-        console.log(tariffs)
+        /*console.log("tarrifs: ")
+        console.log(tariffs)*/
         const table = $('#tariffsTable');
         table.find('tr:not(:first)').remove();
         tariffs.forEach(tariff =>{
             const tr1 = $('<tr></tr>');
-            const td1 = $('<td>' + tariff.type + '</td>');
-            const td2 = $('<td>' + tariff.price + '</td>');
-            const td3 = $('<td></td>');
-            const td4 = $('<td></td>');
+            const td1 = $('<td>' + tariff.startPoint + '</td>');
+            const td2 = $('<td>' + tariff.endPoint + '</td>');
+            const td3 = $('<td>' + tariff.distance + '</td>');
+            const td4 = $('<td>' + tariff.time + '</td>');
+            const td5 = $('<td>' + tariff.type + '</td>');
+            const td6 = $('<td>' + tariff.price + '</td>');
+            const td7 = $('<td>' + tariff.maxWeight + '</td>');
+            const tdDOP3 = $('<td></td>');
+            const tdDOP4 = $('<td></td>');
             const edit = $('<i class="fa fa-pencil-square" style="color:#00043c"></i>')
             edit.click(() => {
                 openTariffModal(tariff, (updatedTariff) => {
@@ -47,9 +52,9 @@ const tariffsTable = (userId) => {
                     //tariffsTable(userId);
                 });
             })
-            td3.append(edit);
-            td4.append(del);
-            tr1.append(td1, td2, td3, td4);
+            tdDOP3.append(edit);
+            tdDOP4.append(del);
+            tr1.append(td1, td2,td3, td4, td5, td6, td7, tdDOP3, tdDOP4);
             $('#tariffsTable').append(tr1);
         })
     })
@@ -89,8 +94,13 @@ const openTariffModal = (tariff = null, submitAction = (tariff) => {
     }
     tariff = tariff ? tariff : {};
 
+    $('#tariffModalStartPoint').val(tariff.startPoint);
+    $('#tariffModalEndPoint').val(tariff.endPoint);
+    $('#tariffModalDistance').val(tariff.distance);
+    $('#tariffModalTime').val(tariff.time);
     $('#tariffModalTypes').val(tariff.type);
     $('#tariffModalPrice').val(tariff.price);
+    $('#tariffModalMaxWeight').val(tariff.maxWeight);
 
     $('#tariffModal').modal('show')
     $('#tariffForm').off('submit');
@@ -98,8 +108,13 @@ const openTariffModal = (tariff = null, submitAction = (tariff) => {
     $('#tariffForm').submit((event) => {
         event.preventDefault();
         let newTariff = {}; //не удалять!
+        newTariff.startPoint = $('#tariffModalStartPoint').val();
+        newTariff.endPoint = $('#tariffModalEndPoint').val();
+        newTariff.distance = Number.parseFloat($('#tariffModalDistance').val());
+        newTariff.time = Number.parseFloat($('#tariffModalTime').val());
         newTariff.type = extractSingleSelectedItem('tariffModalTypes');
         newTariff.price = Number.parseFloat($('#tariffModalPrice').val());
+        newTariff.maxWeight = Number.parseFloat($('#tariffModalMaxWeight').val());
         submitAction(newTariff);
         /*console.log(newTariff);*/
         $('#tariffModal').modal('hide');
@@ -130,7 +145,7 @@ $(document).ready(() => {
             });
         })
         $('#createTariffBtn').click(() => {
-            console.log("company.tariff:  " + user.company.tariff)
+           /* console.log("company.tariff:  " + user.company.tariff)*/
             openTariffModal(user.company.tariff, (tariff) => {
                 ajaxPOSTWithoutResponse('/about/tariff/' + user.id, tariff, () => {
                     showMessage("Тариф создан", 1000, () => {

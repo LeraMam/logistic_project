@@ -4,22 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <div th:insert="~{/fragments/headLinks :: head_fragment}"></div>
-	  <script>
-		  $(document).ready(() => {
-			  $('#goodsCountForm').submit(event => {
-				  event.preventDefault();
-				  const body = {};
-				  console.log($('#goodsCountForm').serializeArray())
-				  $.each($('#goodsCountForm').serializeArray(), (i, field) => {
-					  body[field.name] = field.value;
-				  })
-				  ajaxPOSTWithoutResponse('/count', body, () => {
-					  //window.location.href = '/catalog'
-				  })
-			  });
-		  });
-	  </script>
-
+	  <script th:src="@{/js/search.js}"></script>
   </head>
   <body>
 
@@ -33,7 +18,7 @@
 							<div class="row no-gutters mb-5" >
 								<div class="col-md-7" >
 									<div class="contact-wrap w-100 p-md-5 p-4" > <!--w-100 размер всей этой хрени -->
-										<h3 class="mb-4">Рассчет стоимости перевозки</h3>
+										<h3 class="mb-4">Подбор перевозчика</h3>
 										<form id="goodsCountForm" name="goodsCountForm" class="goodsCountForm" >
 											<p class="label">Выберите способ доставки</p>
 											<input type="radio" id="l1" name="deliveryType" value="Все">
@@ -73,7 +58,23 @@
 														<input type="text" class="form-control" name="endPoint" id="endPoint" placeholder="Точка прибытия">
 													</div>
 												</div>
-												<input type="submit" value="Рассчитать" class="btn btn-primary">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="label" for="distance">Расстояние</label>
+														<input type="text" class="form-control" name="startPoint" id="distance" placeholder="Расстояние">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="label" for="time">Время доставки</label>
+														<input type="text" class="form-control" name="endPoint" id="time" placeholder="Время">
+													</div>
+												</div>
+												<div class="col-md-12">
+													<div class="form-group">
+														<input type="submit" value="Рассчитать" class="btn btn-primary">
+													</div>
+												</div>
 											</div>
 
 										</form>
@@ -94,36 +95,16 @@
 				<div class="col-md-9" >
 					<h3 class="mb-4">Грузоперевозчики</h3>
 					<div class="wrapper" >
-						<table class="table">
+						<table id="userSearchTable" class="table">
 							<tr>
-								<th>Заголовок 1</th>
-								<th>Заголовок 2</th>
-								<th>Заголовок 3</th>
-								<th>Заголовок 4</th>
-							</tr>
-							<tr>
-								<td>Ячейка 1-1</td>
-								<td>Ячейка 1-2</td>
-								<td>Ячейка 1-3</td>
-								<td>Ячейка 1-4</td>
-							</tr>
-							<tr>
-								<td>Ячейка 2-1</td>
-								<td>Ячейка 2-2</td>
-								<td>Ячейка 2-3</td>
-								<td>Ячейка 2-4</td>
-							</tr>
-							<tr>
-								<td>Ячейка 3-1</td>
-								<td>Ячейка 3-2</td>
-								<td>Ячейка 3-3</td>
-								<td>Ячейка 3-4</td>
-							</tr>
-							<tr>
-								<td>Ячейка 4-1</td>
-								<td>Ячейка 4-2</td>
-								<td>Ячейка 4-3</td>
-								<td>Ячейка 4-4</td>
+								<th>Точка отправления</th> <!--1-->
+								<th>Точка назначения</th> <!--2-->
+								<th>Расстояние</th> <!--3-->
+								<th>Время доставки</th> <!--4-->
+								<th>Вид транспорта</th> <!--5-->
+								<th>Тариф</th> <!--6-->
+								<th>Максимальный вес</th> <!--7-->
+								<th></th> <!--8 для кнопки заявки на заказ-->
 							</tr>
 						</table>
 					</div>

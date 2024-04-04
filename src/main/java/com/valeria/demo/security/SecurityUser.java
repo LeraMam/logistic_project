@@ -62,7 +62,7 @@ public class SecurityUser implements UserDetails {
     }
 
     public static UserDetails fromUser(UserEntity user) {
-        System.out.println("fromUser");
+        /*System.out.println("fromUser");*/
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
         return new org.springframework.security.core.userdetails.User(

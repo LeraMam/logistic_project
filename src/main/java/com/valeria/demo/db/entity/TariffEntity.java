@@ -14,7 +14,12 @@ public class TariffEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String startPoint;
+    private String endPoint;
+    private Double distance;
+    private Double time;
     @Enumerated(EnumType.STRING)
     private TransportationType type;
     private Double price;
+    private Double maxWeight;
 }
