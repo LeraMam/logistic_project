@@ -19,9 +19,7 @@ public class CompanyEntity {
     private Long id;
     private String name;
     private String email;
-    /*@Enumerated(EnumType.STRING)
-    private List<TransportationType> type = new ArrayList<>();*/
     private String description;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
     private List<TariffEntity> tariff = new ArrayList<>();
 }

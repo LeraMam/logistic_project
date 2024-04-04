@@ -19,7 +19,7 @@ public class GoodCountController {
 
     @PostMapping
     public void addCountDate(@RequestBody GoodsEntity goodsEntity){
-        System.out.println(goodsEntity);
+        /*System.out.println(goodsEntity);*/
         goodsService.addNewGoods(goodsEntity);
     }
 }

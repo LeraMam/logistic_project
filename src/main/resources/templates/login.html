@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home Builder - Free Bootstrap 4 Template by Colorlib</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <div th:insert="~{/fragments/headLinks :: head_fragment}"></div>
+
   </head>
   <body>
 
@@ -19,52 +19,30 @@
           <div class="wrapper" >
             <div class="row no-gutters mb-5" >
               <div class="col-md-7" >
-                <div style="width: 500px" class="contact-wrap p-md-5 p-4" > <!--w-100 размер всей этой хрени -->
-                  <h3 class="mb-4"> Войти как пользователь</h3>
-                  <form id="userForm" name="userForm" class="userForm" >
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="label" for="userLogin">Логин</label>
-                          <input type="text" class="form-control" name="userLogin" id="userLogin" placeholder="">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="label" for="userPassword">Пароль</label>
-                          <input type="text" class="form-control" name="userPassword" id="userPassword" placeholder="">
-                        </div>
-                      </div>
-                      <input id="userButton" type="submit" value="Войти" class="btn btn-primary">
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6" >
-          <div class="wrapper" >
-            <div class="row no-gutters mb-5" >
-              <div class="col-md-7" >
                 <div style="width: 500px" class="contact-wrap p-md-5 p-4" >
-                  <h3 class="mb-4">Войти как грузоперевозчик</h3>
-                  <form id="companyForm" name="companyForm" class="companyForm" >
+                  <h3 class="mb-4">Вход</h3>
+                  <form id="companyForm" name="companyForm" class="companyForm" method="post" action="/login">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="label" for="companyLogin">Логин</label>
-                          <input type="text" class="form-control" name="companyLogin" id="companyLogin" placeholder="">
+                          <input type="text" class="form-control" name="username" id="companyLogin" placeholder="" autocomplete="username" >
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="label" for="companyPassword">Пароль</label>
-                          <input type="text" class="form-control" name="companyPassword" id="companyPassword" placeholder="">
+                          <input type="password" class="form-control" name="password" id="companyPassword" placeholder="">
                         </div>
                       </div>
-                      <input id="companyButton" type="submit" value="Войти" class="btn btn-primary">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <input id="companyButton" type="submit" value="Войти" class="btn btn-primary">
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label class="label" for="companyButton">Нет аккаунта?  <a href="/register">Зарегистрироваться</a></label>
                     </div>
                   </form>
               </div>

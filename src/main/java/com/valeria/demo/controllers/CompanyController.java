@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/about")
 public class CompanyController {
     private final CompanyService companyService;
-
     @Autowired
     public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
     }
+
     @PostMapping("/company")
     public void addCompany(@RequestBody CompanyEntity companyEntity){
-        System.out.println(companyEntity);
         companyService.addNewCompany(companyEntity);
     }
 }

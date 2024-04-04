@@ -4,4 +4,6 @@ import com.valeria.demo.db.entity.TariffEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TariffRepository extends JpaRepository<TariffEntity, Long> {
+    TariffEntity findTariffEntityById(Long id);
+    boolean existsTariffEntityById(Long id);
 }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <div th:insert="~{/fragments/headLinks :: head_fragment}"></div>
+
+  </head>
+  <body>
+
+  <div th:replace="~{/fragments/header :: header}"></div>
+
+  <div th:replace="~{/fragments/top_fragment :: top_fragment}"></div>
+
+  <section style="margin-top: -60px; margin-bottom: 90px" class="ftco-section" >
+    <div class="container" >
+      <div class="row justify-content-center" >
+        <div class="col-md-6" >
+          <div class="wrapper" >
+            <div class="row no-gutters mb-5" >
+              <div class="col-md-7" >
+                <div style="width: 500px" class="contact-wrap p-md-5 p-4" > <!--w-100 размер всей этой хрени -->
+                  <h3 class="mb-4">Регистрация</h3>
+                  <form id="userRegForm" name="userRegForm" class="userForm" >
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="label" for="userRegLogin">Логин</label>
+                          <input type="text" class="form-control" name="userRegLogin" id="userRegLogin" placeholder="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="label" for="userRegPassword">Пароль</label>
+                          <input type="password" class="form-control" name="userRegPassword" id="userRegPassword" placeholder="">
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="userRole">Зарегистрировать как компанию</label>
+                          <input type="checkbox" id="userRole" name="userRole" value=""/>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <input id="userRegButton" type="submit" value="Войти" class="btn btn-primary">
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="col-md-6" >
+          <div class="wrapper" >
+            <div class="row no-gutters mb-5" >
+              <div class="col-md-7" >
+                <div style="width: 500px" class="contact-wrap p-md-5 p-4" >
+                  <h3 class="mb-4">Зарегистрироваться как грузоперевозчик</h3>
+                  <form id="companyRegForm" name="companyForm" class="companyForm" >
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="label" for="companyRegLogin">Логин</label>
+                          <input type="text" class="form-control" name="companyRegLogin" id="companyRegLogin" placeholder="">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="label" for="companyRegPassword">Пароль</label>
+                          <input type="password" class="form-control" name="companyRegPassword" id="companyRegPassword" placeholder="">
+                        </div>
+                      </div>
+                      <input id="companyRegButton" type="submit" value="Войти" class="btn btn-primary">
+                    </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>-->
+      </div>
+    </div>
+  </section>
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <div th:insert="~{/fragments/headLinks :: script_fragment}"></div>
+
+  <div th:insert="~{/fragments/footer :: footer}"></div>
+  </body>
+</html>

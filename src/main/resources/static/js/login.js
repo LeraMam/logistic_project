@@ -1,19 +1,33 @@
+/*
 $(document).ready(() => {
-    $('#companyButton').click(() => {
+    $('#userButton').click((event) => {
         event.preventDefault();
-        const body = {
-            login: $('#companyLogin').val(),
-            role: 'COMPANY',
-            password: $('#companyPassword').val()
+        const userBody = {
+            login: $('#userLogin').val(),
+            role: 'ROLE_USER',
+            password: $('#userPassword').val()
         }
-
-        ajaxPOST('/login/register', body, () => {
-            showMessage("Пользователь зарегистрирован ", 1000, ()=> {
+        console.log(userBody)
+        ajaxPOSTWithoutResponse('/login/sign', userBody, () => {
+            showMessage("Успешно ", 1000, ()=> {
                 //reloadUsers();
-                // updateList(filterItemsConfig.years)
             })
         })
     })
-    }
-)
+    $('#companyButton').click((event) => {
+        event.preventDefault();
+        const companyBody = {
+            login: $('#companyLogin').val(),
+            role: 'ROLE_COMPANY',
+            password: $('#companyPassword').val()
+        }
 
+        ajaxPOST('/login/sign', companyBody, () => {
+            showMessage("Успешно ", 1000, ()=> {
+                //reloadUsers();
+            })
+        })
+    })
+})
+
+*/

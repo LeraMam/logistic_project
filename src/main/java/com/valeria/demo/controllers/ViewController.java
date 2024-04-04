@@ -1,11 +1,19 @@
 package com.valeria.demo.controllers;
 
+import com.valeria.demo.services.UserService;
+/*import org.springframework.security.core.context.SecurityContextHolder;*/
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class ViewController {
+    private final UserService userService;
+
+    public ViewController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("/about")
     public ModelAndView aboutView(){
         String name = "About company";
@@ -23,12 +31,12 @@ public class ViewController {
         modelAndView.setViewName("account");
         return modelAndView;
     }
-    @GetMapping("/count")
+    @GetMapping("/search")
     public ModelAndView countView(){
-        String name = "Count";
+        String name = "Search";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("pageTitle", name);
-        modelAndView.setViewName("count");
+        modelAndView.setViewName("search");
         return modelAndView;
     }
     @GetMapping("/login")
@@ -39,6 +47,22 @@ public class ViewController {
         modelAndView.setViewName("login");
         return modelAndView;
     }
+    @GetMapping("/register")
+    public ModelAndView registerView(){
+        String name = "Registration";
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("pageTitle", name);
+        modelAndView.setViewName("register");
+        return modelAndView;
+    }
+
+    /*@GetMapping("/signedIn")
+    public ModelAndView signedIn() {
+        ModelAndView modelAndView = new ModelAndView();
+        System.out.println("redirect");
+        modelAndView.setViewName("redirect:/count");
+        return modelAndView;
+    }*/
 
     @GetMapping("/orders")
     public ModelAndView orderView(){

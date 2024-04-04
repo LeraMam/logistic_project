@@ -12,7 +12,6 @@ public class GoodsService {
     public GoodsService(GoodsRepository goodsRepository) {
         this.goodsRepository = goodsRepository;
     }
-
     public GoodsEntity addNewGoods(GoodsEntity newGoodsEntity){
         return goodsRepository.save(newGoodsEntity);
     }

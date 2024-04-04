@@ -1,13 +1,30 @@
-<div th:fragment="header">
+<div th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a href="/account" class="nav-link">Account</a></li>
-                    <li class="nav-item"><a href="/about" class="nav-link">About company</a></li>
-                    <li class="nav-item"><a href="/orders" class="nav-link">Orders</a></li>
-                    <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-                    <li class="nav-item"><a href="/count" class="nav-link">Count</a></li>
+                    <li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+                        <a href="/account" class="nav-link">Account</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_USER')" class="nav-item" >
+                        <a href="/search" class="nav-link">Count</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_COMPANY')" class="nav-item">
+                        <a href="/about" class="nav-link">About company</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_COMPANY')" class="nav-item">
+                        <a href="/orders" class="nav-link">Orders</a>
+                    </li>
+                    <li sec:authorize="isAnonymous()" class="nav-item">
+                        <a href="/login" class="nav-link">Login</a>
+                    </li>
+                   <!-- <li sec:authorize="isAuthenticated()">
+                        <a onclick="" href="/login"><i class="fa fa-sign-out"></i> Выход</a>
+                    </li>-->
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="nav-link" onclick="document.getElementById('logout-form').submit();" href="#">Logout</a>
+                        <form id="logout-form" action="/logout" method="post" style="display: none;"></form>
+                    </li>
                 </ul>
             </div>
         </div>
