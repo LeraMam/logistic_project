@@ -10,34 +10,30 @@
 
   <div th:replace="~{/fragments/header :: header}"></div>
   <div th:replace="~{/fragments/top_fragment :: top_fragment}"></div>
-    <section class="ftco-section" >
-    	<div class="container" >
-    		<div class="row justify-content-center" >
-					<div class="col-md-12" >
-						<div class="wrapper" >
+    <section class="ftco-section">
+    	<div class="container">
+    		<div class="row justify-content-center">
+					<div class="col-md-12">
+						<div class="wrapper">
 							<div class="row no-gutters mb-5" >
 								<div class="col-md-7" >
 									<div class="contact-wrap w-100 p-md-5 p-4" > <!--w-100 размер всей этой хрени -->
 										<h3 class="mb-4">Подбор перевозчика</h3>
-										<form id="goodsCountForm" name="goodsCountForm" class="goodsCountForm" >
-											<p class="label">Выберите способ доставки</p>
-											<input type="radio" id="l1" name="deliveryType" value="Все">
-											<label for="l1">Все</label>
-											<input type="radio" id="l2" name="deliveryType" value="Море">
-											<label for="l2">Море</label>
-											<input type="radio" id="l3" name="deliveryType" value="Железная дорога">
-											<label for="l3">Железная дорога</label>
-											<input type="radio" id="l4" name="deliveryType" value="Авто">
-											<label for="l4">Авто</label>
-											<input type="radio" id="l5" name="deliveryType" value="Воздух">
-											<label for="l5">Воздух</label>
-											<input type="radio" id="l6" name="deliveryType" value="Навалочный груз">
-											<label for="l6">Навалочный груз</label>
+										<form id="goodsCountForm" name="goodsCountForm" class="goodsCountForm">
+											<label for="userSearchTypes">Выберите тип транспорта</label>
+											<select id="userSearchTypes" name="userSearchTypes" class="form-control" >
+												<option value="" selected></option>
+												<option value="SEA">Море</option>
+												<option value="RAILWAY">Железная дорога</option>
+												<option value="AUTO">Авто</option>
+												<option value="AIR">Воздух</option>
+												<option value="BC">Навалочный груз</option>
+											</select><br>
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="label" for="goodType">Тип товара</label>
-														<input type="text" class="form-control" name="goodType" id="goodType" placeholder="Тип товара">
+														<label class="label" for="price">Стоимость</label>
+														<input type="text" class="form-control" name="price" id="price" placeholder="Стоимость">
 													</div>
 												</div>
 												<div class="col-md-6">
@@ -67,12 +63,13 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="label" for="time">Время доставки</label>
-														<input type="text" class="form-control" name="endPoint" id="time" placeholder="Время">
+														<input type="text" class="form-control" name="time" id="time" placeholder="Время">
 													</div>
 												</div>
 												<div class="col-md-12">
 													<div class="form-group">
-														<input type="submit" value="Рассчитать" class="btn btn-primary">
+														<input type="submit" value="Найти" class="btn btn-primary">
+														<input type="button" value="Очистить" class="btn btn-primary" onclick="clearForm()">
 													</div>
 												</div>
 											</div>
@@ -92,7 +89,7 @@
 	<section class="ftco-section">
 		<div class="container" >
 			<div class="row justify-content-center" >
-				<div class="col-md-9" >
+				<div id="searchTableBlock" class="col-md-12" style="display: none;">
 					<h3 class="mb-4">Грузоперевозчики</h3>
 					<div class="wrapper" >
 						<table id="userSearchTable" class="table">
@@ -103,8 +100,9 @@
 								<th>Время доставки</th> <!--4-->
 								<th>Вид транспорта</th> <!--5-->
 								<th>Тариф</th> <!--6-->
-								<th>Максимальный вес</th> <!--7-->
-								<th></th> <!--8 для кнопки заявки на заказ-->
+								<th>Общая стоимость</th> <!--7-->
+								<th>Максимальный вес</th> <!--8-->
+								<th></th> <!--9 для кнопки заявки на заказ-->
 							</tr>
 						</table>
 					</div>

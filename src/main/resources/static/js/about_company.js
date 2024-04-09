@@ -147,7 +147,7 @@ $(document).ready(() => {
         $('#createTariffBtn').click(() => {
            /* console.log("company.tariff:  " + user.company.tariff)*/
             openTariffModal(user.company.tariff, (tariff) => {
-                ajaxPOSTWithoutResponse('/about/tariff/' + user.id, tariff, () => {
+                ajaxPOSTWithoutResponse('/about/tariff/' + user.company.id, tariff, () => {
                     showMessage("Тариф создан", 1000, () => {
                         tariffsTable(user.id);
                     })

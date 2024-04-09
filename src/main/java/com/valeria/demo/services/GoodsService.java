@@ -1,3 +1,4 @@
+/*
 package com.valeria.demo.services;
 
 import com.valeria.demo.db.entity.GoodsEntity;
@@ -16,3 +17,4 @@ public class GoodsService {
         return goodsRepository.save(newGoodsEntity);
     }
 }
+*/

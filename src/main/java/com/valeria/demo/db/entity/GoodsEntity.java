@@ -1,3 +1,4 @@
+/*
 package com.valeria.demo.db.entity;
 
 import jakarta.persistence.*;
@@ -20,3 +21,4 @@ public class GoodsEntity {
     private String startPoint;
     private String endPoint;
 }
+*/

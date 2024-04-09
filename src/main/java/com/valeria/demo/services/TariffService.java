@@ -24,6 +24,10 @@ public class TariffService {
         return companyRepository.findCompanyEntityById(companyId).getTariff();
     }
 
+    public List<TariffEntity> getAllTariffs(){
+        return tariffRepository.findAll();
+    }
+
     public TariffEntity findTariffEntityById(Long id){
         return tariffRepository.findTariffEntityById(id);
     }

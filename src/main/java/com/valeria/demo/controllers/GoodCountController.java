@@ -1,3 +1,4 @@
+/*
 package com.valeria.demo.controllers;
 
 import com.valeria.demo.db.entity.GoodsEntity;
@@ -19,7 +20,10 @@ public class GoodCountController {
 
     @PostMapping
     public void addCountDate(@RequestBody GoodsEntity goodsEntity){
-        /*System.out.println(goodsEntity);*/
+        */
+/*System.out.println(goodsEntity);*//*
+
         goodsService.addNewGoods(goodsEntity);
     }
 }
+*/
