@@ -28,15 +28,7 @@ public class TariffController {
 
     @PostMapping("/tariffs")
     public List<TariffEntity> getAllTariffs(
-            /*@RequestParam(value = "deliveryType", required = false) List<String> deliveryType,
-            @RequestParam(value = "startPoint", required = false) String startPoint,
-            @RequestParam(value = "endPoint", required = false) String endPoint,
-            @RequestParam(value = "price", required = false) Double maxPrice,
-            @RequestParam(value = "maxWeight", required = false) Double maxWeight,
-            @RequestParam(value = "distance", required = false) Double maxDistance,
-            @RequestParam(value = "time", required = false) Double maxTime,*/
             @RequestBody(required = false) TariffEntity searchTariffEntity){
-        System.out.println("Работает контроллер...");
 
         List<TariffEntity> filterList =  tariffService.getAllTariffs()
                 .stream()
@@ -50,7 +42,6 @@ public class TariffController {
                 .collect(Collectors.toList());
         return  filterList;
     }
-
     @PostMapping("/tariff/{companyId}")
     public void addTariff(@PathVariable Long companyId, @RequestBody TariffEntity tariffEntity){
         tariffService.addNewTariff(companyId, tariffEntity);

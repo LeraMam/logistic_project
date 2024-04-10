@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--план на страницу: сделать всплывающее окошко редактирования и создания наших данных,
+например: две кнопки: создать и редактировать, каждая будет видна при своем условии: если для этого
+аккаунта нет записи в таблице с компаниями, то активна "создать портфолио", иначе - "изменить портфолио"
+для кажой кнопик будет всплывающее окно, а на самой страничке будет портфолио компании-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <div th:insert="~{/fragments/headLinks :: head_fragment}"></div>
+    <link href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script th:src="@{/js/tariffs.js}"></script>
+</head>
+<body>
+
+<div th:replace="~{/fragments/header :: header}"></div>
+
+<div th:replace="~{/fragments/top_fragment :: top_fragment}"></div>
+
+<section class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="margin-top: 40px">
+                <h5 class="mb-4" style="margin-left: 40px">Промежуточные точки</h5>
+                <div class="wrapper" style="margin-left: 40px">
+                    <table id="tariffsTable" class="table">
+                        <tr>
+                            <th>Точка отправления</th> <!--1-->
+                            <th>Точка назначения</th> <!--2-->
+                            <th>Расстояние</th> <!--3-->
+                            <th>Время доставки</th> <!--4-->
+                            <th>Вид транспорта</th> <!--5-->
+                            <th>Тариф</th> <!--6-->
+                            <th>Максимальный вес</th> <!--7-->
+                            <th><i class="fa fa-plus-circle" id="createTariffBtn" style="color: #ffc107"></i></th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="tariffModal" tabindex="-1" role="dialog" aria-labelledby="companyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tariffModalLabel">Создать портфолио</h5>
+            </div>
+            <form id="tariffForm">
+                <div class="modal-body">
+                    <label for="tariffModalStartPoint">Точка отправления</label>
+                    <input class="form-control" id="tariffModalStartPoint" type="text" placeholder="" required value=""/><br>
+
+                    <label for="tariffModalEndPoint">Точка назначения</label>
+                    <input class="form-control" id="tariffModalEndPoint" type="text" placeholder="" required value=""/><br>
+
+                    <label for="tariffModalDistance">Расстояние(км)</label>
+                    <input class="form-control" id="tariffModalDistance" type="text" placeholder="" required value=""/><br>
+
+                    <label for="tariffModalTime">Время доставки(ч)</label>
+                    <input class="form-control" id="tariffModalTime" type="text" placeholder="" required value=""/><br>
+
+                    <label for="tariffModalTypes">Выберите тип транспорта</label>
+                    <select id="tariffModalTypes" name="tariffModalTypes" class="form-control" >
+                        <option value="SEA">Море</option>
+                        <option value="RAILWAY">Железная дорога</option>
+                        <option value="AUTO">Авто</option>
+                        <option value="AIR">Воздух</option>
+                        <option value="BC">Навалочный груз</option>
+                    </select><br>
+
+                    <label for="tariffModalPrice">Тариф</label>
+                    <input class="form-control" id="tariffModalPrice" type="text" placeholder="" required value=""/><br>
+
+                    <label for="tariffModalMaxWeight">Максимальный вес(т)</label>
+                    <input class="form-control" id="tariffModalMaxWeight" type="text" placeholder="" required value=""/><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button id="bookSubmit" type="submit" class="btn success">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+<div th:insert="~{/fragments/headLinks :: script_fragment}"></div>
+
+<div th:insert="~{/fragments/footer :: footer}"></div>
+</body>
+</html>

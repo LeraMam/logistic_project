@@ -13,6 +13,9 @@
                         <a href="/about" class="nav-link">About company</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_COMPANY')" class="nav-item">
+                        <a href="/tariffs" class="nav-link">Point tariffs</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_COMPANY')" class="nav-item">
                         <a href="/orders" class="nav-link">Orders</a>
                     </li>
                     <li sec:authorize="isAnonymous()" class="nav-item">

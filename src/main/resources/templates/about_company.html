@@ -25,27 +25,16 @@
   <section class="">
       <div class="container">
           <div class="row">
-              <div id="companyInfoBlock" class="col-md-6">
-
-              </div>
-              <!--<div id="companyInfoBlock" class="col-md-6">
-                  <h5 class="font-weight-bold">Home Builder</h5>
-                  <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-
-              </div>-->
-
-              <div class="col-md-12" style="margin-top: 10px">
+              <div id="companyInfoBlock" class="col-md-4"> </div>
+              <div class="col-md-8" style="margin-top: 10px">
+                  <h5 class="mb-4" style="margin-left: 40px">Маршруты доставки</h5>
                   <div class="wrapper" style="margin-left: 40px">
-                      <table id="tariffsTable" class="table">
+                      <table id="waysTable" class="table">
                           <tr>
                               <th>Точка отправления</th> <!--1-->
                               <th>Точка назначения</th> <!--2-->
-                              <th>Расстояние</th> <!--3-->
-                              <th>Время доставки</th> <!--4-->
-                              <th>Вид транспорта</th> <!--5-->
-                              <th>Тариф</th> <!--6-->
-                              <th>Максимальный вес</th> <!--7-->
-                              <th><i class="fa fa-plus-circle" id="createTariffBtn" style="color: #ffc107"></i></th>
+                              <th>Возможный путь доставки</th> <!--3-- здесь будет выпадающий список для экономии места -->
+                              <th><i class="fa fa-plus-circle" id="createWayBtn" style="color: #ffc107"></i></th>
                               <th></th>
                           </tr>
                       </table>
@@ -59,7 +48,7 @@
       <div class="modal-dialog" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="companyModalLabel">Создать портфолио</h5>
+                  <h5 class="modal-title" id="companyModalLabel"></h5>
               </div>
               <form id="companyForm">
                   <div class="modal-body">
@@ -73,52 +62,53 @@
                       <textarea class="form-control" id="companyModalDescription" type="text" placeholder="Общая информация о компании" required value=""></textarea><br>
                   </div>
                   <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button id="companySubmit" type="submit" class="btn success">Save changes</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                      <button id="companySubmit" type="submit" class="btn success">Сохранить</button>
                   </div>
               </form>
           </div>
       </div>
   </div>
 
-  <div class="modal fade" id="tariffModal" tabindex="-1" role="dialog" aria-labelledby="companyModalLabel" aria-hidden="true">
+  <div class="modal fade" id="wayModal" tabindex="-1" role="dialog" aria-labelledby="wayModal" aria-hidden="true">
       <div class="modal-dialog" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="tariffModalLabel">Создать портфолио</h5>
+                  <h5 class="modal-title" id="wayModalLabel"></h5>
               </div>
-              <form id="tariffForm">
+              <form id="wayForm">
                   <div class="modal-body">
-                      <label for="tariffModalStartPoint">Точка отправления</label>
-                      <input class="form-control" id="tariffModalStartPoint" type="text" placeholder="" required value=""/><br>
+                      <label for="wayModalStartPoint">Начальная точка пути</label>
+                      <input class="form-control" id="wayModalStartPoint" type="text" placeholder="Начальная точка" required value=""/><br>
 
-                      <label for="tariffModalEndPoint">Точка назначения</label>
-                      <input class="form-control" id="tariffModalEndPoint" type="text" placeholder="" required value=""/><br>
+                      <label for="wayModalEndPoint">Конечная точка пути</label>
+                      <input class="form-control" id="wayModalEndPoint" type="text" placeholder="Конечная точка" required value=""/><br>
 
-                      <label for="tariffModalDistance">Расстояние(км)</label>
-                      <input class="form-control" id="tariffModalDistance" type="text" placeholder="" required value=""/><br>
-
-                      <label for="tariffModalTime">Время доставки(ч)</label>
-                      <input class="form-control" id="tariffModalTime" type="text" placeholder="" required value=""/><br>
-
-                       <label for="tariffModalTypes">Выберите тип транспорта</label>
-                       <select id="tariffModalTypes" name="tariffModalTypes" class="form-control" >
-                           <option value="SEA">Море</option>
-                           <option value="RAILWAY">Железная дорога</option>
-                           <option value="AUTO">Авто</option>
-                           <option value="AIR">Воздух</option>
-                           <option value="BC">Навалочный груз</option>
-                       </select><br>
-
-                       <label for="tariffModalPrice">Тариф</label>
-                       <input class="form-control" id="tariffModalPrice" type="text" placeholder="" required value=""/><br>
-
-                      <label for="tariffModalMaxWeight">Максимальный вес(т)</label>
-                      <input class="form-control" id="tariffModalMaxWeight" type="text" placeholder="" required value=""/><br>
+                      <label for="wayModalPointNumber">Число промежуточных узлов</label>
+                      <input class="form-control" id="wayModalPointNumber" type="text" placeholder="Число узлов" required value=""><br>
                   </div>
                   <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button id="bookSubmit" type="submit" class="btn success">Save changes</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                      <button id="waySubmit" type="submit" class="btn success">Сохранить</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="intervalWayModal" tabindex="-1" role="dialog" aria-labelledby="wayModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="intervalWayModalLabel"></h5>
+              </div>
+              <form id="intervalWayForm">
+                  <div class="modal-body">
+                      <div id="pathInputsContainer"></div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                      <button id="intervalWaySubmit" type="submit" class="btn success">Сохранить</button>
                   </div>
               </form>
           </div>

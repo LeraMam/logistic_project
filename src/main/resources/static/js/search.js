@@ -18,13 +18,19 @@ const searchTable = tariffs => {
         const td7 = $('<td>' + (tariff.price * tariff.distance).toFixed(2) + '</td>');
         const td8 = $('<td>' + tariff.maxWeight + '</td>');
         const tdDOP3 = $('<td></td>');
+        const tdDOP4 = $('<td></td>');
         /*<input id="companyButton" type="submit" value="Войти" className="btn btn-primary">*/
         const button = $(' <input id="companyButton" type="submit" value="Бронь" class="btn btn-primary">')
         button.click(() => {
             console.log("BUTTON!");
         })
+        const button2 = $(' <input id="profileButton" type="submit" value="Профиль" class="btn btn-primary">')
+        button.click(() => {
+            console.log("BUTTONforprofile!");
+        })
         tdDOP3.append(button)
-        tr1.append(td1, td2,td3, td4, td5, td6, td7, td8, tdDOP3);
+        tdDOP4.append(button2)
+        tr1.append(td1, td2,td3, td4, td5, td6, td7, td8, tdDOP3, tdDOP4);
         $('#userSearchTable').append(tr1);
     })
 }

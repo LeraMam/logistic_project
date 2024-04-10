@@ -23,6 +23,15 @@ public class ViewController {
         return modelAndView;
     }
 
+    @GetMapping("/tariffs")
+    public ModelAndView tariffsView(){
+        String name = "Point tariffs";
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("pageTitle", name);
+        modelAndView.setViewName("tariffs");
+        return modelAndView;
+    }
+
     @GetMapping("/account")
     public ModelAndView accountView(){
         String name = "Account";
@@ -55,14 +64,6 @@ public class ViewController {
         modelAndView.setViewName("register");
         return modelAndView;
     }
-
-    /*@GetMapping("/signedIn")
-    public ModelAndView signedIn() {
-        ModelAndView modelAndView = new ModelAndView();
-        System.out.println("redirect");
-        modelAndView.setViewName("redirect:/count");
-        return modelAndView;
-    }*/
 
     @GetMapping("/orders")
     public ModelAndView orderView(){

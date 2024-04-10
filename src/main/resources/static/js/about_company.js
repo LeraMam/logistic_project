@@ -15,47 +15,45 @@ const companyBlock = (company) => {
     }
 }
 
-const tariffsTable = (userId) => {
-    ajaxGET('/about/tariff/' + userId, tariffs => {
-        /*$('#tariffsTable').empty();*/
-        /*console.log("tarrifs: ")
-        console.log(tariffs)*/
-        const table = $('#tariffsTable');
+const waysTable = (userId) => {
+    ajaxGET('/way/' + userId, ways => {
+        const table = $('#waysTable');
         table.find('tr:not(:first)').remove();
-        tariffs.forEach(tariff =>{
+        ways.forEach(way =>{
+            console.log("way")
+            console.log(way.intervalWays) //берем цикл for each, потом tariffs и хуярим
+            let selectElement = $('<select style="margin-top: 20px"></select>');
+            way.intervalWays.forEach(intervalWay =>{
+                let option = $('<option value=""> </option>');
+                for(let i = 0; i < intervalWay.tariffs.length; i++){
+                    let text = intervalWay.tariffs[i].startPoint + '—';
+                    if(( i + 1)=== intervalWay.tariffs.length) {
+                        text = intervalWay.tariffs[i].endPoint;
+                    }
+                    option.append(text);
+                    selectElement.append(option);
+                }
+            })
             const tr1 = $('<tr></tr>');
-            const td1 = $('<td>' + tariff.startPoint + '</td>');
-            const td2 = $('<td>' + tariff.endPoint + '</td>');
-            const td3 = $('<td>' + tariff.distance + '</td>');
-            const td4 = $('<td>' + tariff.time + '</td>');
-            const td5 = $('<td>' + tariff.type + '</td>');
-            const td6 = $('<td>' + tariff.price + '</td>');
-            const td7 = $('<td>' + tariff.maxWeight + '</td>');
+            const td1 = $('<td>' + way.startPoint + '</td>');
+            const td2 = $('<td>' + way.endPoint + '</td>');
+            /*const td3 = $('<td>' + way.startPoint + '</td>');*/
             const tdDOP3 = $('<td></td>');
             const tdDOP4 = $('<td></td>');
-            const edit = $('<i class="fa fa-pencil-square" style="color:#00043c"></i>')
-            edit.click(() => {
-                openTariffModal(tariff, (updatedTariff) => {
-                    console.log(updatedTariff);
-                    ajaxPUT('/about/tariff/' + userId + "/" + tariff.id, updatedTariff, () => {
-                        showMessage("Тариф изменен", 1000, () => {
-                            tariffsTable(userId);
+            const addPoint = $('<i class="fa fa-plus-circle" id="createIntervalPointBtn" style="color:#44944A"></i>')
+            addPoint.click(() => {
+                openIntervalWayModal(way, way.pointNumber, (newWay) => {
+                    ajaxPOSTWithoutResponse('/way/add/interval/' + way.id , newWay, () => {
+                        showMessage("Промежуточный путь создан", 1000, () => {
+                            waysTable(userId);
                         })
                     })
                 });
             })
-            const del = $('<i class="fa fa-trash-o" style="color: darkred"></i>')
-            del.click(() => {
-                console.log('delete button');
-                ajaxDELETE('/about/' + tariff.id, () => {
-                    showMessage('Тариф удален', 1500)
-                    //tariffsTable(userId);
-                });
-            })
-            tdDOP3.append(edit);
-            tdDOP4.append(del);
-            tr1.append(td1, td2,td3, td4, td5, td6, td7, tdDOP3, tdDOP4);
-            $('#tariffsTable').append(tr1);
+
+            tdDOP3.append(addPoint);
+            tr1.append(td1, td2, selectElement, tdDOP3, tdDOP4);
+            $('#waysTable').append(tr1);
         })
     })
 }
@@ -85,55 +83,89 @@ const openCompanyModal = (company = null, submitAction = (company) => {
     })
 }
 
-const openTariffModal = (tariff = null, submitAction = (tariff) => {
+const openWayModal = (way = null, submitAction = (way) => {
 }) => {
-    if (!tariff.type && !tariff.price ) {
-        $('#tariffModalLabel').text('Добавить тариф')
+    if (!way.startPoint && !way.endPoint && !way.pointNumber) {
+        $('#wayModalLabel').text('Создать путь')
     } else {
-        $('#tariffModalLabel').text('Изменить тариф')
+        $('#wayModalLabel').text('Изменить путь')
     }
-    tariff = tariff ? tariff : {};
+    way = way ? way : {};
 
-    $('#tariffModalStartPoint').val(tariff.startPoint);
-    $('#tariffModalEndPoint').val(tariff.endPoint);
-    $('#tariffModalDistance').val(tariff.distance);
-    $('#tariffModalTime').val(tariff.time);
-    $('#tariffModalTypes').val(tariff.type);
-    $('#tariffModalPrice').val(tariff.price);
-    $('#tariffModalMaxWeight').val(tariff.maxWeight);
+    $('#wayModalStartPoint').val(way.startPoint);
+    $('#wayModalEndPoint').val(way.endPoint);
+    $('#wayModalPointNumber').val(way.pointNumber);
+    $('#wayModal').modal('show')
 
-    $('#tariffModal').modal('show')
-    $('#tariffForm').off('submit');
-
-    $('#tariffForm').submit((event) => {
+    $('#wayForm').submit((event) => {
         event.preventDefault();
-        let newTariff = {}; //не удалять!
-        newTariff.startPoint = $('#tariffModalStartPoint').val();
-        newTariff.endPoint = $('#tariffModalEndPoint').val();
-        newTariff.distance = Number.parseFloat($('#tariffModalDistance').val());
-        newTariff.time = Number.parseFloat($('#tariffModalTime').val());
-        newTariff.type = extractSingleSelectedItem('tariffModalTypes');
-        newTariff.price = Number.parseFloat($('#tariffModalPrice').val());
-        newTariff.maxWeight = Number.parseFloat($('#tariffModalMaxWeight').val());
-        submitAction(newTariff);
-        /*console.log(newTariff);*/
-        $('#tariffModal').modal('hide');
+        let newWay = {}; //не удалять!
+        newWay.startPoint = $('#wayModalStartPoint').val();
+        newWay.endPoint = $('#wayModalEndPoint').val();
+        newWay.pointNumber = Number.parseInt($('#wayModalPointNumber').val());
+        submitAction(newWay);
+        console.log(newWay);
+        $('#wayModal').modal('hide');
+    })
+}
+
+const openIntervalWayModal = (intervalPoint = null, pointNumber, submitAction = (intervalPoint) => {
+}) => {
+    const pathForm = document.getElementById('intervalWayForm');
+    const pathInputsContainer = document.getElementById('pathInputsContainer');
+    let searchTariff = {};
+    while (pathInputsContainer.firstChild) {
+        pathInputsContainer.removeChild(pathInputsContainer.firstChild);
+    }
+
+    ajaxPOST('/about/tariffs', searchTariff, tariffs => {
+        /*console.log("тарифы:")
+        console.log(tariffs)*/
+        for(let i= 0; i < pointNumber + 1; i++){
+            let select = document.createElement('select');
+            let div = document.createElement('div');
+            let label = document.createElement('label');
+            label.textContent = 'Точка номер ' +  (i + 1);
+            div.appendChild(label);
+            div.appendChild(select);
+            select.classList.add('form-control');
+            select.setAttribute('id', 'selectPoint' + (i + 1));
+            pathInputsContainer.appendChild(div);
+            let number = 1;
+            tariffs.forEach(tariff => {
+                /*console.log("тариф:")
+                console.log(tariff)*/
+                let option = document.createElement('option');
+                option.value = tariff.id;
+                option.text = tariff.startPoint + ' - ' + tariff.endPoint;
+                /*console.log(option);*/
+                select.appendChild(option);
+                /*console.log(select);*/
+                number++;
+            })
+        }
+    });
+
+    $('#intervalWayModal').modal('show')
+
+    $('#intervalWayForm').off('submit').submit((event) => {
+        event.preventDefault();
+        let selectedValues = [];
+        for (let i = 0; i < pointNumber + 1; i++) {
+            let select = document.getElementById('selectPoint' + (i + 1));
+            selectedValues.push(select.value);
+        }
+        console.log(selectedValues);
+        submitAction(selectedValues);
+        $('#intervalWayModal').modal('hide');
     })
 }
 
 $(document).ready(() => {
-    /*function getCookie() {
-        return document.cookie.split('; ').reduce((acc, item) => {
-            const [name, value] = item.split('=')
-            acc[name] = value
-            return acc
-        }, {})
-    }*/
-
-    ajaxGET('/login/auth' /*+ cookie.userId*/, user => {
+    ajaxGET('/login/auth', user => {
         console.log(user);
-        tariffsTable(user.id);
         companyBlock(user.company);
+        waysTable(user.company.id);
 
         $('#createCompanyBtn').click(() => {
             openCompanyModal(user.company, (company) => {
@@ -144,12 +176,12 @@ $(document).ready(() => {
                 })
             });
         })
-        $('#createTariffBtn').click(() => {
-           /* console.log("company.tariff:  " + user.company.tariff)*/
-            openTariffModal(user.company.tariff, (tariff) => {
-                ajaxPOSTWithoutResponse('/about/tariff/' + user.company.id, tariff, () => {
-                    showMessage("Тариф создан", 1000, () => {
-                        tariffsTable(user.id);
+        $('#createWayBtn').click(() => {
+            console.log(user.company.ways);
+            openWayModal(user.company.ways, (way) => {
+                ajaxPOSTWithoutResponse('/way/add/' + user.company.id, way, () => {
+                    showMessage("Путь создан", 1000, () => {
+                        waysTable(user.id);
                     })
                 })
             });
