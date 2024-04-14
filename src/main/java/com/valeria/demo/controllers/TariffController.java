@@ -3,12 +3,8 @@ package com.valeria.demo.controllers;
 import com.valeria.demo.db.entity.TariffEntity;
 import com.valeria.demo.services.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,10 +22,14 @@ public class TariffController {
         return tariffService.getAllTariffsForCompany(companyId);
     }
 
+    @GetMapping("/tariff/way/{intervalWayId}")
+    public List<TariffEntity> getAllTariffsForIntervalWay(@PathVariable Long intervalWayId){
+        return tariffService.getAllTariffsForIntervalWay(intervalWayId);
+    }
+
     @PostMapping("/tariffs")
     public List<TariffEntity> getAllTariffs(
             @RequestBody(required = false) TariffEntity searchTariffEntity){
-
         List<TariffEntity> filterList =  tariffService.getAllTariffs()
                 .stream()
                 .filter(tariffEntity -> searchTariffEntity.getType() == null || tariffEntity.getType() == searchTariffEntity.getType())

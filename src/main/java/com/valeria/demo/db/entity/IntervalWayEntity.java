@@ -17,4 +17,10 @@ public class IntervalWayEntity {
     private Long id;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<TariffEntity> tariffs;
+    private Double sumDistance;
+    private Double sumTime;
+    private Double sumPrice;
+    private Double maxWeight;
+    private boolean sortByTime;
+    private boolean sortByPrice;
 }

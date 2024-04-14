@@ -5,7 +5,9 @@ import com.valeria.demo.db.entity.IntervalWayEntity;
 import com.valeria.demo.db.entity.TariffEntity;
 import com.valeria.demo.db.entity.WayEntity;
 import com.valeria.demo.db.repositories.CompanyRepository;
+import com.valeria.demo.db.repositories.IntervalWayRepository;
 import com.valeria.demo.db.repositories.TariffRepository;
+import com.valeria.demo.db.repositories.WayRepository;
 import com.valeria.demo.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,16 +18,43 @@ import java.util.*;
 public class TariffService {
     private final TariffRepository tariffRepository;
     private final CompanyRepository companyRepository;
+    private final WayRepository wayRepository;
+    private final IntervalWayRepository intervalWayRepository;
     @Autowired
-    public TariffService(TariffRepository tariffRepository, CompanyRepository companyRepository) {
+    public TariffService(TariffRepository tariffRepository, CompanyRepository companyRepository, WayRepository wayRepository, IntervalWayRepository intervalWayRepository) {
         this.tariffRepository = tariffRepository;
         this.companyRepository = companyRepository;
+        this.wayRepository = wayRepository;
+        this.intervalWayRepository = intervalWayRepository;
     }
 
     public List<TariffEntity> getAllTariffsForCompany(Long companyId){
         CompanyEntity companyEntity = companyRepository.findCompanyEntityById(companyId);
         if(companyEntity!=null){
             return companyEntity.getTariffs();
+        }
+        else return Collections.emptyList();
+    }
+
+    public List<TariffEntity> getAllTariffsForWay(Long wayId){
+        WayEntity wayEntity = wayRepository.findWayEntityById(wayId);
+        if(wayEntity!=null){
+            List<IntervalWayEntity> intervalWayEntityList = wayEntity.getIntervalWays();
+            List<TariffEntity> tariffEntityList = new ArrayList<>();
+            for(IntervalWayEntity intervalWayEntity : intervalWayEntityList){
+                List<TariffEntity> newTariffEntityList = intervalWayEntity.getTariffs();
+                tariffEntityList.addAll(newTariffEntityList);
+            }
+            return tariffEntityList;
+        }
+        else return Collections.emptyList();
+    }
+
+    public List<TariffEntity> getAllTariffsForIntervalWay(Long intervalWayId){
+        IntervalWayEntity intervalWayEntity = intervalWayRepository.findIntervalWayEntityById(intervalWayId);
+        if(intervalWayEntity != null){
+            List<TariffEntity> tariffEntityList = intervalWayEntity.getTariffs();
+            return tariffEntityList;
         }
         else return Collections.emptyList();
     }

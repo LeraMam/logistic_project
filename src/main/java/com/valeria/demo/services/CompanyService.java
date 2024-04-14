@@ -20,6 +20,10 @@ public class CompanyService {
     public CompanyEntity findCompanyById(Long id){
         return companyRepository.findCompanyEntityById(id);
     }
+
+    public List<CompanyEntity> getAllCompanies(){
+        return companyRepository.findAll();
+    }
     public CompanyEntity addNewCompany(CompanyEntity companyEntity){
         return companyRepository.save(companyEntity);
     }

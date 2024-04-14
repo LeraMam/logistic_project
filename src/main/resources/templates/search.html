@@ -32,38 +32,50 @@
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="label" for="price">Стоимость</label>
-														<input type="text" class="form-control" name="price" id="price" placeholder="Стоимость">
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label class="label" for="weight">Вес груза</label>
-														<input type="text" class="form-control" name="weight" id="weight" placeholder="Вес груза">
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
 														<label class="label" for="startPoint">Точка отправления</label>
-														<input type="text" class="form-control" name="startPoint" id="startPoint" placeholder="Точка отправления">
+														<input type="text" class="form-control" name="startPoint" id="startPoint" placeholder="">
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="label" for="endPoint">Точка прибытия</label>
-														<input type="text" class="form-control" name="endPoint" id="endPoint" placeholder="Точка прибытия">
+														<input type="text" class="form-control" name="endPoint" id="endPoint" placeholder="">
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="label" for="distance">Расстояние</label>
-														<input type="text" class="form-control" name="startPoint" id="distance" placeholder="Расстояние">
+														<label class="label" for="intervalPoint">Промежуточный город</label>
+														<input type="text" class="form-control" name="intervalPoint" id="intervalPoint" placeholder="">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="label" for="weight">Вес груза</label>
+														<input type="text" class="form-control" name="weight" id="weight" placeholder="">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="label" for="price">Стоимость</label>
+														<input type="text" class="form-control" name="price" id="price" placeholder="">
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="label" for="time">Время доставки</label>
-														<input type="text" class="form-control" name="time" id="time" placeholder="Время">
+														<input type="text" class="form-control" name="time" id="time" placeholder="">
+													</div>
+												</div>
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="sortByTime">Сортировать по времени доставки</label>
+														<input type="checkbox" id="sortByTime" name="userRole" value=""/>
+													</div>
+												</div>
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="sortByPrice">Сортировать по стоимости доставки</label>
+														<input type="checkbox" id="sortByPrice" name="userRole" value=""/>
 													</div>
 												</div>
 												<div class="col-md-12">
@@ -72,6 +84,7 @@
 														<input type="button" value="Очистить" class="btn btn-primary" onclick="clearForm()">
 													</div>
 												</div>
+
 											</div>
 
 										</form>
@@ -90,16 +103,18 @@
 		<div class="container" >
 			<div class="row justify-content-center" >
 				<div id="searchTableBlock" class="col-md-12" style="display: none;">
-					<h3 class="mb-4">Грузоперевозчики</h3>
+					<!--<h3 class="mb-4">Грузоперевозчики</h3>-->
 					<div class="wrapper" >
 						<table id="userSearchTable" class="table">
 							<tr>
-								<th>Точка отправления</th> <!--1-->
-								<th>Точка назначения</th> <!--2-->
-								<th>Расстояние</th> <!--3-->
-								<th>Время доставки</th> <!--4-->
+								<th>Компания</th> <!--1-->
+								<th>Точка отправления</th> <!--2-->
+								<th>Точка назначения</th> <!--3-->
+								<th>Маршрут</th> <!--4-->
 								<th>Вид транспорта</th> <!--5-->
-								<th>Тариф</th> <!--6-->
+								<!--<th>Расстояние</th> 3-->
+								<th>Время доставки</th> <!--6-->
+								<!--<th>Тариф</th> 6-->
 								<th>Общая стоимость</th> <!--7-->
 								<th>Максимальный вес</th> <!--8-->
 								<th></th> <!--9 для кнопки заявки на заказ-->

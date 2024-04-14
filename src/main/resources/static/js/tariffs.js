@@ -91,14 +91,14 @@ $(document).ready(() => {
 
     ajaxGET('/login/auth' /*+ cookie.userId*/, user => {
         console.log(user);
-        tariffsTable(user.id);
+        tariffsTable(user.company.id);
 
         $('#createTariffBtn').click(() => {
             /* console.log("company.tariff:  " + user.company.tariff)*/
             openTariffModal(user.company.tariffs, (tariff) => {
                 ajaxPOSTWithoutResponse('/about/tariff/' + user.company.id, tariff, () => {
                     showMessage("Тариф создан", 1000, () => {
-                        tariffsTable(user.id);
+                        tariffsTable(user.company.id);
                     })
                 })
             });

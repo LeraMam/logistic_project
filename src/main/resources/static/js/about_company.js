@@ -21,16 +21,18 @@ const waysTable = (userId) => {
         table.find('tr:not(:first)').remove();
         ways.forEach(way =>{
             console.log("way")
-            console.log(way.intervalWays) //берем цикл for each, потом tariffs и хуярим
+            console.log(way.intervalWays)
             let selectElement = $('<select style="margin-top: 20px"></select>');
             way.intervalWays.forEach(intervalWay =>{
                 let option = $('<option value=""> </option>');
                 for(let i = 0; i < intervalWay.tariffs.length; i++){
                     let text = intervalWay.tariffs[i].startPoint + '—';
-                    if(( i + 1)=== intervalWay.tariffs.length) {
-                        text = intervalWay.tariffs[i].endPoint;
+                    let text2 =''
+                    if((i + 1)=== intervalWay.tariffs.length) {
+                        text2 = intervalWay.tariffs[i].endPoint;
                     }
                     option.append(text);
+                    option.append(text2)
                     selectElement.append(option);
                 }
             })
@@ -50,7 +52,6 @@ const waysTable = (userId) => {
                     })
                 });
             })
-
             tdDOP3.append(addPoint);
             tr1.append(td1, td2, selectElement, tdDOP3, tdDOP4);
             $('#waysTable').append(tr1);
@@ -181,7 +182,7 @@ $(document).ready(() => {
             openWayModal(user.company.ways, (way) => {
                 ajaxPOSTWithoutResponse('/way/add/' + user.company.id, way, () => {
                     showMessage("Путь создан", 1000, () => {
-                        waysTable(user.id);
+                        waysTable(user.company.id);
                     })
                 })
             });
