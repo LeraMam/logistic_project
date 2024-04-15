@@ -56,8 +56,8 @@ public class TariffController {
         return tariffService.editTariff(companyId, tariffId, tariffEntity);
     }
 
-    @DeleteMapping("/{tariffId}")
-    public void deleteTariff(@PathVariable Long tariffId){
-        tariffService.deleteTariff(tariffId);
+    @DeleteMapping("/{tariffId}/{companyId}")
+    public void deleteTariff(@PathVariable Long tariffId, @PathVariable Long companyId){
+        tariffService.deleteTariff(tariffId, companyId);
     }
 }

@@ -5,8 +5,8 @@ const extractSingleSelectedItem = (selectId) => {
     return selected ? selected : null;
 }
 
-const tariffsTable = (userId) => {
-    ajaxGET('/about/tariff/' + userId, tariffs => {
+const tariffsTable = (companyId) => {
+    ajaxGET('/about/tariff/' + companyId, tariffs => {
         /*$('#tariffsTable').empty();*/
         /*console.log("tarrifs: ")
         console.log(tariffs)*/
@@ -27,9 +27,9 @@ const tariffsTable = (userId) => {
             edit.click(() => {
                 openTariffModal(tariff, (updatedTariff) => {
                     console.log(updatedTariff);
-                    ajaxPUT('/about/tariff/' + userId + "/" + tariff.id, updatedTariff, () => {
+                    ajaxPUT('/about/tariff/' + companyId + "/" + tariff.id, updatedTariff, () => {
                         showMessage("Тариф изменен", 1000, () => {
-                            tariffsTable(userId);
+                            tariffsTable(companyId);
                         })
                     })
                 });
@@ -37,9 +37,9 @@ const tariffsTable = (userId) => {
             const del = $('<i class="fa fa-trash-o" style="color: darkred"></i>')
             del.click(() => {
                 console.log('delete button');
-                ajaxDELETE('/about/' + tariff.id, () => {
+                ajaxDELETE('/about/' + tariff.id + '/' + companyId, () => {
                     showMessage('Тариф удален', 1500)
-                    //tariffsTable(userId);
+                    //tariffsTable(companyId);
                 });
             })
             tdDOP3.append(edit);

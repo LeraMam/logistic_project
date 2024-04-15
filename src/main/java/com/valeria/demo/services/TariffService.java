@@ -8,6 +8,7 @@ import com.valeria.demo.db.repositories.CompanyRepository;
 import com.valeria.demo.db.repositories.IntervalWayRepository;
 import com.valeria.demo.db.repositories.TariffRepository;
 import com.valeria.demo.db.repositories.WayRepository;
+import com.valeria.demo.exception.BadRequestException;
 import com.valeria.demo.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -120,11 +121,27 @@ public class TariffService {
         return savedEntity;
     }
 
-    public void deleteTariff(Long id){
-        boolean exists = isTariffExists(id);
-        if (!exists) {
-            throw new NotFoundException("Тариф с заданным id не существует");
+    public void deleteTariff(Long tariffId, Long companyId){
+        if (!isTariffExists(tariffId)) throw new NotFoundException("Тариф с заданным id не существует");
+        if (!companyRepository.existsCompanyEntityById(companyId)) throw new NotFoundException("Компания с заданным id не существует");
+        CompanyEntity companyEntity = companyRepository.findCompanyEntityById(companyId);
+        for(WayEntity wayEntity : companyEntity.getWays()){
+            for(IntervalWayEntity intervalWayEntity : wayEntity.getIntervalWays()){
+                for(TariffEntity tariffEntity : intervalWayEntity.getTariffs()){
+                    if(tariffEntity.getId() == tariffId){
+                        throw new BadRequestException("Тариф используются в путях, его нельзя удалить");
+                    }
+                }
+            }
         }
-        tariffRepository.deleteById(id);
+        List<TariffEntity> tariffEntityList = companyEntity.getTariffs();
+        for(int i=0; i < tariffEntityList.size(); i++){
+            if(tariffEntityList.get(i).getId() == tariffId){
+                tariffEntityList.remove(i);
+            }
+        }
+        companyEntity.setTariffs(tariffEntityList);
+        companyRepository.save(companyEntity);
+        tariffRepository.deleteById(tariffId);
     }
 }

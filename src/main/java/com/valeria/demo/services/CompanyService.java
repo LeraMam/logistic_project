@@ -21,6 +21,9 @@ public class CompanyService {
         return companyRepository.findCompanyEntityById(id);
     }
 
+    public boolean isCompanyExists(Long id){
+        return companyRepository.existsCompanyEntityById(id);
+    }
     public List<CompanyEntity> getAllCompanies(){
         return companyRepository.findAll();
     }

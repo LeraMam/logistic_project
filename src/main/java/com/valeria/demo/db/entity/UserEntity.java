@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,4 +23,6 @@ public class UserEntity {
     private String password;
     @OneToOne
     private CompanyEntity company;
+    /*@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<OrderEntity> orders;*/
 }

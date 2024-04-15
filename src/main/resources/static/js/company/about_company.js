@@ -15,8 +15,10 @@ const companyBlock = (company) => {
     }
 }
 
-const waysTable = (userId) => {
-    ajaxGET('/way/' + userId, ways => {
+const waysTable = (companyId) => {
+    ajaxGET('/way/' + companyId, ways => {  //нужно читать тарифы только для компании, а не все
+        console.log("ways")
+        console.log(ways)
         const table = $('#waysTable');
         table.find('tr:not(:first)').remove();
         ways.forEach(way =>{
@@ -40,20 +42,31 @@ const waysTable = (userId) => {
             const td1 = $('<td>' + way.startPoint + '</td>');
             const td2 = $('<td>' + way.endPoint + '</td>');
             /*const td3 = $('<td>' + way.startPoint + '</td>');*/
+            const tdDOP1 = $('<td></td>');
+            const tdDOP2 = $('<td></td>');
             const tdDOP3 = $('<td></td>');
-            const tdDOP4 = $('<td></td>');
-            const addPoint = $('<i class="fa fa-plus-circle" id="createIntervalPointBtn" style="color:#44944A"></i>')
-            addPoint.click(() => {
-                openIntervalWayModal(way, way.pointNumber, (newWay) => {
+            const addIntervalWay = $('<i class="fa fa-plus-circle" id="createIntervalPointBtn" style="color:#44944A"></i>')
+            const editIntervalWay = $('<i class="fa fa-pencil-square" style="color:#00043c"></i>')
+            const deleteIntervalWay = $('<i class="fa fa-trash-o" style="color: darkred"></i>')
+            addIntervalWay.click(() => {
+                openIntervalWayModal(way,companyId, way.pointNumber, (newWay) => {
                     ajaxPOSTWithoutResponse('/way/add/interval/' + way.id , newWay, () => {
                         showMessage("Промежуточный путь создан", 1000, () => {
-                            waysTable(userId);
+                            waysTable(companyId);
                         })
                     })
                 });
             })
-            tdDOP3.append(addPoint);
-            tr1.append(td1, td2, selectElement, tdDOP3, tdDOP4);
+            editIntervalWay.click(() => {
+
+            })
+            deleteIntervalWay.click(() => {
+
+            })
+            tdDOP1.append(addIntervalWay);
+            tdDOP2.append(editIntervalWay);
+            tdDOP3.append(deleteIntervalWay);
+            tr1.append(td1, td2, selectElement, tdDOP3, tdDOP1, tdDOP2, tdDOP3);
             $('#waysTable').append(tr1);
         })
     })
@@ -110,16 +123,15 @@ const openWayModal = (way = null, submitAction = (way) => {
     })
 }
 
-const openIntervalWayModal = (intervalPoint = null, pointNumber, submitAction = (intervalPoint) => {
+const openIntervalWayModal = (intervalPoint = null, companyId, pointNumber, submitAction = (intervalPoint) => {
 }) => {
     const pathForm = document.getElementById('intervalWayForm');
     const pathInputsContainer = document.getElementById('pathInputsContainer');
-    let searchTariff = {};
     while (pathInputsContainer.firstChild) {
         pathInputsContainer.removeChild(pathInputsContainer.firstChild);
     }
 
-    ajaxPOST('/about/tariffs', searchTariff, tariffs => {
+    ajaxGET('/about/tariff/' + companyId, tariffs => {
         /*console.log("тарифы:")
         console.log(tariffs)*/
         for(let i= 0; i < pointNumber + 1; i++){

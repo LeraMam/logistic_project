@@ -22,6 +22,10 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
+    @GetMapping("/one/{companyId}")
+    public CompanyEntity getOneCompany(@PathVariable Long companyId){
+        return companyService.findCompanyById(companyId);
+    }
 
     @PostMapping("/company/all")
     public List<CompanyEntity> getAllCompanies(@RequestBody(required = false) SearchClass searchParams) {
@@ -50,8 +54,10 @@ public class CompanyController {
                 boolean isWayMatched = isWayMatched(wayEntity, searchParams);
                 if ((isWayMatched) && (!filteredIntervalWays.isEmpty())) {
                     WayEntity filteredWay = new WayEntity();
+                    filteredWay.setId(wayEntity.getId());
                     filteredWay.setStartPoint(wayEntity.getStartPoint());
                     filteredWay.setEndPoint(wayEntity.getEndPoint());
+                    filteredWay.setPointNumber(wayEntity.getPointNumber());
                     filteredWay.setIntervalWays(filteredIntervalWays);
                     filteredWays.add(filteredWay);
                 }
@@ -66,13 +72,12 @@ public class CompanyController {
                 filteredCompany.setEmail(company.getEmail());
                 filteredCompany.setDescription(company.getDescription());
                 filteredCompany.setWays(filteredWays);
+                filteredCompany.setTariffs(company.getTariffs());
                 filteredCompanies.add(filteredCompany);
             }
         }
-        System.out.println(filteredCompanies);
         if(searchParams.isSortByTime()) filteredCompanies.sort(Comparator.comparing(companyEntity -> companyEntity.getWays().get(0).getIntervalWays().get(0).getSumTime()));
         if(searchParams.isSortByPrice()) filteredCompanies.sort(Comparator.comparing(companyEntity -> companyEntity.getWays().get(0).getIntervalWays().get(0).getSumPrice()));
-        System.out.println(filteredCompanies);
         return filteredCompanies;
     }
 

@@ -4,14 +4,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <div th:insert="~{/fragments/headLinks :: head_fragment}"></div>
+    <script th:src="@{/js/orders.js}"></script>
   </head>
   <body>
-
 
   <div th:replace="~{/fragments/header :: header}"></div>
 
   <div th:replace="~{/fragments/top_fragment :: top_fragment}"></div>
-   	
+
+  <section class="ftco-section">
+    <div class="container" >
+      <div class="row justify-content-center" >
+        <div id="userOrdersTableBlock" class="col-md-12" style="display: none;">
+          <h3 class="mb-4">Заявки на перевозки</h3>
+          <div class="wrapper" >
+            <table id="userOrdersSearchTable" class="table">
+              <tr>
+                <th>Номер заявки</th> <!--1-->
+                <th>Статус</th> <!--2-->
+                <th>Точка отправления</th> <!--3-->
+                <th>Точка назначения</th> <!--4-->
+                <th>Путь</th> <!--5-->
+                <th>Время доставки</th> <!--6-->
+                <th>Общая стоимость</th> <!--7-->
+                <th>Максимальный вес</th> <!--8-->
+                <th></th> <!--9-->
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </section>
+
+
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 

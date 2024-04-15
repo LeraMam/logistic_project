@@ -3,14 +3,16 @@
 например: две кнопки: создать и редактировать, каждая будет видна при своем условии: если для этого
 аккаунта нет записи в таблице с компаниями, то активна "создать портфолио", иначе - "изменить портфолио"
 для кажой кнопик будет всплывающее окно, а на самой страничке будет портфолио компании-->
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  <div th:insert="~{/fragments/headLinks :: head_fragment}"></div>
       <link href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" />
       <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-      <script th:src="@{/js/about_company.js}"></script>
+      <script th:src="@{/js/company/about_company.js}"></script>
+      <script src="js/company/about_company.js" sec:authorize="hasAuthority('ROLE_COMPANY')"></script>
+      <script src="js/user/about_company.js" sec:authorize="!hasAuthority('ROLE_COMPANY')"></script>
   </head>
   <body>
 
@@ -19,7 +21,7 @@
   <div th:replace="~{/fragments/top_fragment :: top_fragment}"></div>
 
   <div class="col-sm-9" style="margin-left: auto; margin-right: auto; margin-top: 20px">
-      <input type="submit" value="Портфолио"  id="createCompanyBtn" class="btn btn-primary">
+      <input sec:authorize="hasAuthority('ROLE_COMPANY')" type="submit" value="Портфолио"  id="createCompanyBtn" class="btn btn-primary">
   </div>
 
   <section class="">
@@ -34,7 +36,7 @@
                               <th>Точка отправления</th> <!--1-->
                               <th>Точка назначения</th> <!--2-->
                               <th>Возможный путь доставки</th> <!--3-- здесь будет выпадающий список для экономии места -->
-                              <th><i class="fa fa-plus-circle" id="createWayBtn" style="color: #ffc107"></i></th>
+                              <th sec:authorize="hasAuthority('ROLE_COMPANY')"><i class="fa fa-plus-circle" id="createWayBtn" style="color: #ffc107"></i></th>
                               <th></th>
                           </tr>
                       </table>

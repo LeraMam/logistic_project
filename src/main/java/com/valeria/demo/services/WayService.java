@@ -4,6 +4,8 @@ import com.valeria.demo.db.entity.CompanyEntity;
 import com.valeria.demo.db.entity.WayEntity;
 import com.valeria.demo.db.repositories.CompanyRepository;
 import com.valeria.demo.db.repositories.WayRepository;
+import com.valeria.demo.exception.BadRequestException;
+import com.valeria.demo.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -28,11 +30,13 @@ public class WayService {
     }
 
     public void addNewWay(Long companyId, WayEntity wayEntity){
-        WayEntity savedEntity = wayRepository.save(wayEntity);
-        CompanyEntity companyEntity = companyRepository.findCompanyEntityById(companyId);
-        List<WayEntity> waysList = companyEntity.getWays();
-        waysList.add(savedEntity);
-        companyEntity.setWays(waysList);
-        companyRepository.save(companyEntity);
+        if(wayEntity != null) {
+            WayEntity savedEntity = wayRepository.save(wayEntity);
+            CompanyEntity companyEntity = companyRepository.findCompanyEntityById(companyId);
+            List<WayEntity> waysList = companyEntity.getWays();
+            waysList.add(savedEntity);
+            companyEntity.setWays(waysList);
+            companyRepository.save(companyEntity);
+        }
     }
 }
