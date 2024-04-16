@@ -16,10 +16,7 @@ $(document).ready(() => {
             showMessage("Пользователь зарегистрирован ", 1000, () => {
                 //reloadUsers();
             })
-            let dynamicHtml = '<div>' +
-                '<a href="/login">Вернуться к логину</a></label>' +
-                '</div>';
-            $('#dynamicLink').append(dynamicHtml);
+            document.getElementById("registerText").style.display = "block";
         })
     });
 });

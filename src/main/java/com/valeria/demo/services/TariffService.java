@@ -142,6 +142,7 @@ public class TariffService {
         }
         companyEntity.setTariffs(tariffEntityList);
         companyRepository.save(companyEntity);
+
         tariffRepository.deleteById(tariffId);
     }
 }

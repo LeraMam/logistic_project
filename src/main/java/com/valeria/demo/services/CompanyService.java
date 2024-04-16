@@ -20,7 +20,6 @@ public class CompanyService {
     public CompanyEntity findCompanyById(Long id){
         return companyRepository.findCompanyEntityById(id);
     }
-
     public boolean isCompanyExists(Long id){
         return companyRepository.existsCompanyEntityById(id);
     }
@@ -30,4 +29,5 @@ public class CompanyService {
     public CompanyEntity addNewCompany(CompanyEntity companyEntity){
         return companyRepository.save(companyEntity);
     }
+
 }

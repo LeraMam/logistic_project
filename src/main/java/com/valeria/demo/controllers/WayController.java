@@ -28,10 +28,28 @@ public class WayController {
         wayService.addNewWay(companyId, wayEntity);
     }
 
+    @PutMapping("/edit/{companyId}/{wayId}")
+    public void editWay(@PathVariable Long companyId, @PathVariable Long wayId, @RequestBody WayEntity wayEntity){
+        wayService.editWay(companyId, wayId, wayEntity);
+    }
+
+    @DeleteMapping("/delete/{companyId}/{wayId}")
+    public void deleteWay(@PathVariable Long companyId, @PathVariable Long wayId){
+        wayService.deleteWay(companyId, wayId);
+    }
+
     @PostMapping("/add/interval/{wayId}")
     public void addIntervalWay(@PathVariable Long wayId, @RequestBody ArrayList<Long> dataList){
-        System.out.println(wayId);
-        System.out.println(dataList);
         intervalWayService.addNewIntervalWay(wayId, dataList);
+    }
+
+    @PutMapping("/edit/interval/{wayId}/{intervalWayId}")
+    public void editIntervalWay(@PathVariable Long wayId, @PathVariable Long intervalWayId, @RequestBody ArrayList<Long> dataList){
+        intervalWayService.editIntervalWay(wayId, intervalWayId, dataList);
+    }
+
+    @DeleteMapping("/delete/interval/{companyId}/{wayId}/{intervalWayId}")
+    public void deleteIntervalWay(@PathVariable Long companyId, @PathVariable Long wayId, @PathVariable Long intervalWayId){
+        intervalWayService.deleteIntervalWay(companyId, wayId, intervalWayId);
     }
 }

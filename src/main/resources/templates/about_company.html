@@ -27,14 +27,15 @@
   <section class="">
       <div class="container">
           <div class="row">
-              <div id="companyInfoBlock" class="col-md-4"> </div>
-              <div class="col-md-8" style="margin-top: 10px">
+              <div id="companyInfoBlock" class="col-md-3"> </div>
+              <div class="col-md-9" style="margin-top: 10px">
                   <h5 class="mb-4" style="margin-left: 40px">Маршруты доставки</h5>
                   <div class="wrapper" style="margin-left: 40px">
                       <table id="waysTable" class="table">
                           <tr>
                               <th>Точка отправления</th> <!--1-->
                               <th>Точка назначения</th> <!--2-->
+                              <th sec:authorize="hasAuthority('ROLE_COMPANY')">Работа с путями</th>
                               <th>Возможный путь доставки</th> <!--3-- здесь будет выпадающий список для экономии места -->
                               <th sec:authorize="hasAuthority('ROLE_COMPANY')"><i class="fa fa-plus-circle" id="createWayBtn" style="color: #ffc107"></i></th>
                               <th></th>
