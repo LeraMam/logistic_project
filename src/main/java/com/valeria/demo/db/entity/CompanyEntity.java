@@ -19,6 +19,7 @@ public class CompanyEntity {
     private Long id;
     private String name;
     private String email;
+    private Double maxTC;
     private String description;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
     private List<WayEntity> ways = new ArrayList<>();

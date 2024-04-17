@@ -20,11 +20,13 @@ public class OrderEntity {
     private OrderState state;
     @ManyToOne
     private UserEntity user;
+    @OneToOne
+    private ItemEntity item;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private CompanyEntity company;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private WayEntity way;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    private IntervalWayEntity intervalWay;
+    private IntervalWayEntity intervalWay; //здесь хранятся нужные для расчета значения массы груза и цены
 }

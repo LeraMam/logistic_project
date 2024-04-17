@@ -1,5 +1,6 @@
 package com.valeria.demo.services;
 
+import com.valeria.demo.additional.Nabor;
 import com.valeria.demo.db.entity.*;
 import com.valeria.demo.db.repositories.*;
 import com.valeria.demo.exception.NotFoundException;
@@ -9,8 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.math.BigInteger;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -19,14 +21,16 @@ public class OrderService {
     private final CompanyRepository companyRepository;
     private final WayRepository wayRepository;
     private final IntervalWayRepository intervalWayRepository;
+    private final ItemRepository itemRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, UserRepository userRepository, CompanyRepository companyRepository, WayRepository wayRepository, IntervalWayRepository intervalWayRepository) {
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository, CompanyRepository companyRepository, WayRepository wayRepository, IntervalWayRepository intervalWayRepository, ItemRepository itemRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.wayRepository = wayRepository;
         this.intervalWayRepository = intervalWayRepository;
+        this.itemRepository = itemRepository;
     }
 
     public List<OrderEntity> findOrdersForCompany(){
@@ -65,7 +69,7 @@ public class OrderService {
         return findOrders;
     }
 
-    public void addOrder(OrderEntity orderEntity){
+    public void addOrder(OrderEntity orderEntity, Long itemId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = "";
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
@@ -79,10 +83,6 @@ public class OrderService {
         } else {
             throw new NotFoundException("Пользователь не найден");
         }
-        /*CompanyEntity companyEntity = orderEntity.getCompany();
-        WayEntity wayEntity = orderEntity.getWay();
-        IntervalWayEntity intervalWayEntity = orderEntity.getIntervalWay();*/
-
         CompanyEntity managedCompanyEntity = companyRepository.findById(orderEntity.getCompany().getId())
                 .orElseThrow(() -> new NotFoundException("Компания не найдена"));
 
@@ -98,11 +98,12 @@ public class OrderService {
         newOrder.setWay(managedWayEntity);
         newOrder.setIntervalWay(managedIntervalWayEntity);
         newOrder.setUser(findUserEntity);
+        ItemEntity item = itemRepository.findItemEntityById(itemId);
+        newOrder.setItem(item);
         OrderEntity savedOrder = orderRepository.save(newOrder);
     }
 
     public void changeOrder(OrderEntity orderEntity){
-        System.out.println(orderEntity);
         OrderEntity changedOrder = new OrderEntity();
         changedOrder.setId(orderEntity.getId());
         changedOrder.setState(orderEntity.getState());
@@ -116,7 +117,61 @@ public class OrderService {
         else if(orderEntity.getState() == OrderState.IN_PROCESSING){
             changedOrder.setState(OrderState.RESOLVED);
         }
-        System.out.println(changedOrder);
         OrderEntity savedOrder = orderRepository.save(changedOrder);
+    }
+
+    public Nabor calculateBackpackWeightForOrder(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = "";
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        }
+        Optional<UserEntity> user = userRepository.findUserEntityByLogin(username);
+        UserEntity findUserEntity = new UserEntity();
+        if (user.isPresent()) {
+            findUserEntity = user.get();
+        } else {
+            throw new NotFoundException("Пользователь не найден");
+        }
+        CompanyEntity companyEntity = findUserEntity.getCompany();
+        List<OrderEntity> orderEntityList = orderRepository.findAll();
+        double maxTC = companyEntity.getMaxTC();
+        long maxWeightLong = (long) maxTC;
+        BigInteger maxWeight = BigInteger.valueOf(maxWeightLong);
+        Nabor nabor = backpack(orderEntityList, maxWeight);
+        return nabor;
+    }
+
+    public Nabor backpack(List<OrderEntity> orders, BigInteger maxWeight) {
+        Set<Long> seen = new HashSet<>();
+        Nabor result = new Nabor(new ArrayList<>(), BigInteger.ZERO, BigInteger.ZERO);
+        bruteforce(orders, maxWeight, seen, result, BigInteger.ZERO, BigInteger.ZERO);
+        return result;
+    }
+
+    private void bruteforce(List<OrderEntity> orders, BigInteger maxWeight, Set<Long> seen, Nabor result,
+                            BigInteger sumPrice, BigInteger sumWeight) {
+        boolean isLeaf = true;
+        for (OrderEntity order : orders) {
+            if (seen.contains(order.getId())) {
+                continue;
+            }
+            ItemEntity item = order.getItem();
+            if (item.getWeight().add(sumWeight).compareTo(maxWeight) > 0) {
+                continue;
+            }
+
+            seen.add(order.getId());
+            bruteforce(orders, maxWeight, seen, result, sumPrice.add(item.getPrice()), sumWeight.add(item.getWeight()));
+            seen.remove(order.getId());
+            isLeaf = false;
+        }
+
+        if (isLeaf && sumPrice.compareTo(result.getPrice()) >= 0) {
+            result.setPrice(sumPrice);
+            result.setWeight(sumWeight);
+            result.setResults(new ArrayList<>(seen));
+        }
     }
 }

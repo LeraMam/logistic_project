@@ -22,9 +22,20 @@ const searchTable = (companies, body) => {
                 const tdDOP3 = $('<td></td>');
                 const tdDOP4 = $('<td></td>');
                 const button = $('<input id="companyButton" type="submit" value="Бронь" class="btn btn-primary">');
+                const backpack = {
+                    weight: Number.parseFloat($('#weight').val()),
+                    price: order.intervalWay.sumPrice
+                };
+                console.log("backpack");
+                console.log(backpack);
                 button.click(() => {
-                    ajaxPOSTWithoutResponse('/order/add', order,
-                        () => showMessage("Заявка на доставку оформлена", 1000))
+                    ajaxPOST('/order/add/item', backpack, newItem =>{
+                        console.log("newItem");
+                        console.log(newItem);
+                        ajaxPOSTWithoutResponse('/order/add/' + newItem.id, order,
+                            () => showMessage("Заявка на доставку оформлена", 1000, () =>{
+                            }))
+                    })
                 });
                 const button2 = $('<input id="profileButton" type="button" value="Профиль" class="btn btn-primary">');
                 button2.click(() => {

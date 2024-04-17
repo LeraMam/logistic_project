@@ -7,11 +7,12 @@ const extractSingleSelectedItem = (selectId) => {
 
 const companyBlock = (company) => {
     $('#companyInfoBlock').empty();
-    if(company.name && company.email && company.description){
+    if(company.name && company.email && company.maxTC && company.description){
         const name = $('<h4 class="font-weight-bold">' + company.name + '</h4>');
         const email = $('<h6 class="font-weight-bold">' + company.email + '</h6>');
+        const maxTC = $('<p>' + "Максимальный ТС: " + company.maxTC + '</p>');
         const description = $('<p>' + company.description + '</p>');
-        $('#companyInfoBlock').append(name, email, description);
+        $('#companyInfoBlock').append(name, email, description, maxTC,);
     }
 }
 
@@ -119,6 +120,7 @@ const openCompanyModal = (company = null, submitAction = (company) => {
 
     $('#companyModalName').val(company.name);
     $('#companyModalContact').val(company.email);
+    $('#companyModalTC').val(company.maxTC);
     $('#companyModalDescription').val(company.description);
     $('#companyModal').modal('show')
     $('#companyForm').off('submit');
@@ -127,6 +129,7 @@ const openCompanyModal = (company = null, submitAction = (company) => {
         event.preventDefault();
         company.name = $('#companyModalName').val();
         company.email = $('#companyModalContact').val();
+        company.maxTC = Number.parseFloat($('#companyModalTC').val());
         company.description = $('#companyModalDescription').val();
         submitAction(company);
         console.log(company);
