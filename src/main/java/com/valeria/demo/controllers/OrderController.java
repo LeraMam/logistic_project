@@ -1,6 +1,6 @@
 package com.valeria.demo.controllers;
 
-import com.valeria.demo.additional.Nabor;
+import com.valeria.demo.additional.BackpackResult;
 import com.valeria.demo.db.entity.ItemEntity;
 import com.valeria.demo.db.entity.OrderEntity;
 import com.valeria.demo.services.ItemService;
@@ -28,7 +28,7 @@ public class OrderController {
     }
 
     @GetMapping("/optimisation")
-    public Nabor getOptimisationWeightForOrder(){
+    public BackpackResult getOptimisationWeightForOrder(){
         return orderService.calculateBackpackWeightForOrder();
     }
 

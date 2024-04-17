@@ -1,10 +1,4 @@
 
-const extractSingleSelectedItem = (selectId) => {
-    const selected = $('#' + selectId).val()
-    //возвращает пустую строку если ничего не выбрано, поэтому ставим null а не пустую строку
-    return selected ? selected : null;
-}
-
 const companyBlock = (company) => {
     $('#companyInfoBlock').empty();
     if(company.name && company.email && company.maxTC && company.description){
@@ -18,13 +12,9 @@ const companyBlock = (company) => {
 
 const waysTable = (companyId) => {
     ajaxGET('/way/' + companyId, ways => {  //нужно читать тарифы только для компании, а не все
-        console.log("ways")
-        console.log(ways)
         const table = $('#waysTable');
         table.find('tr:not(:first)').remove();
         ways.forEach(way =>{
-            console.log("way")
-            console.log(way.intervalWays)
             let selectElement = $('<select style="margin-top: 20px"></select>');
             way.intervalWays.forEach(intervalWay =>{
                 let option = $('<option value=""> </option>');
@@ -61,10 +51,8 @@ const waysTable = (companyId) => {
                     })
                 });
             })
-            console.log(selectElement)
             editIntervalWay.click(() => {
                 const selectedOptionValue = selectElement.val();
-                console.log(selectedOptionValue);
                 openIntervalWayModal(way,companyId, way.pointNumber, (newWay) => {
                     ajaxPUTWithoutResponse('/way/edit/interval/' + way.id +'/'+ selectedOptionValue, newWay, () => {
                         showMessage("Промежуточный путь изменен", 1000, () => {
@@ -75,7 +63,6 @@ const waysTable = (companyId) => {
             })
             deleteIntervalWay.click(() => {
                 const selectedOptionValue = selectElement.val();
-                console.log(selectedOptionValue);
                 ajaxDELETE('/way/delete/interval/' + companyId + '/' + way.id +'/'+ selectedOptionValue, () => {
                     showMessage("Промежуточный путь удален", 1000, () => {
                         waysTable(companyId);
@@ -132,7 +119,6 @@ const openCompanyModal = (company = null, submitAction = (company) => {
         company.maxTC = Number.parseFloat($('#companyModalTC').val());
         company.description = $('#companyModalDescription').val();
         submitAction(company);
-        console.log(company);
         $('#companyModal').modal('hide');
     })
 }
@@ -159,7 +145,6 @@ const openWayModal = (way = null, submitAction = (way) => {
         newWay.endPoint = $('#wayModalEndPoint').val();
         newWay.pointNumber = Number.parseInt($('#wayModalPointNumber').val());
         submitAction(newWay);
-        console.log(newWay);
         $('#wayModal').modal('hide');
     })
 }
@@ -172,8 +157,6 @@ const openIntervalWayModal = (intervalPoint = null, companyId, pointNumber, subm
         pathInputsContainer.removeChild(pathInputsContainer.firstChild);
     }
     ajaxGET('/about/tariff/' + companyId, tariffs => {
-        /*console.log("тарифы:")
-        console.log(tariffs)*/
         for(let i= 0; i < pointNumber + 1; i++){
             let select = document.createElement('select');
             let div = document.createElement('div');
@@ -186,14 +169,10 @@ const openIntervalWayModal = (intervalPoint = null, companyId, pointNumber, subm
             pathInputsContainer.appendChild(div);
             let number = 1;
             tariffs.forEach(tariff => {
-                /*console.log("тариф:")
-                console.log(tariff)*/
                 let option = document.createElement('option');
                 option.value = tariff.id;
                 option.text = tariff.startPoint + ' - ' + tariff.endPoint;
-                /*console.log(option);*/
                 select.appendChild(option);
-                /*console.log(select);*/
                 number++;
             })
         }
@@ -209,7 +188,6 @@ const openIntervalWayModal = (intervalPoint = null, companyId, pointNumber, subm
             let select = document.getElementById('selectPoint' + (i + 1));
             selectedValues.push(select.value);
         }
-        console.log(selectedValues);
         submitAction(selectedValues);
         $('#intervalWayModal').modal('hide');
     })
@@ -217,10 +195,8 @@ const openIntervalWayModal = (intervalPoint = null, companyId, pointNumber, subm
 
 $(document).ready(() => {
     ajaxGET('/login/auth', user => {
-        console.log(user);
         companyBlock(user.company);
         waysTable(user.company.id);
-
         $('#createCompanyBtn').click(() => {
             openCompanyModal(user.company, (company) => {
                 ajaxPOSTWithoutResponse('/about/company', company, () => {

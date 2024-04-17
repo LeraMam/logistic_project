@@ -1,6 +1,6 @@
 package com.valeria.demo.services;
 
-import com.valeria.demo.additional.Nabor;
+import com.valeria.demo.additional.BackpackResult;
 import com.valeria.demo.db.entity.*;
 import com.valeria.demo.db.repositories.*;
 import com.valeria.demo.exception.NotFoundException;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -24,7 +23,10 @@ public class OrderService {
     private final ItemRepository itemRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, UserRepository userRepository, CompanyRepository companyRepository, WayRepository wayRepository, IntervalWayRepository intervalWayRepository, ItemRepository itemRepository) {
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository,
+                        CompanyRepository companyRepository, WayRepository wayRepository,
+                        IntervalWayRepository intervalWayRepository,
+                        ItemRepository itemRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
@@ -65,8 +67,7 @@ public class OrderService {
         } else {
             throw new NotFoundException("Пользователь не найден");
         }
-        List<OrderEntity> findOrders = orderRepository.findOrderEntitiesByUser(findUserEntity);
-        return findOrders;
+        return orderRepository.findOrderEntitiesByUser(findUserEntity);
     }
 
     public void addOrder(OrderEntity orderEntity, Long itemId){
@@ -120,7 +121,7 @@ public class OrderService {
         OrderEntity savedOrder = orderRepository.save(changedOrder);
     }
 
-    public Nabor calculateBackpackWeightForOrder(){
+    public BackpackResult calculateBackpackWeightForOrder(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = "";
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
@@ -139,19 +140,18 @@ public class OrderService {
         double maxTC = companyEntity.getMaxTC();
         long maxWeightLong = (long) maxTC;
         BigInteger maxWeight = BigInteger.valueOf(maxWeightLong);
-        Nabor nabor = backpack(orderEntityList, maxWeight);
-        return nabor;
+        return backpackCall(orderEntityList, maxWeight);
     }
 
-    public Nabor backpack(List<OrderEntity> orders, BigInteger maxWeight) {
+    public BackpackResult backpackCall(List<OrderEntity> orders, BigInteger maxWeight) {
         Set<Long> seen = new HashSet<>();
-        Nabor result = new Nabor(new ArrayList<>(), BigInteger.ZERO, BigInteger.ZERO);
-        bruteforce(orders, maxWeight, seen, result, BigInteger.ZERO, BigInteger.ZERO);
+        BackpackResult result = new BackpackResult(new ArrayList<>(), BigInteger.ZERO, BigInteger.ZERO);
+        backpackRealisation(orders, maxWeight, seen, result, BigInteger.ZERO, BigInteger.ZERO);
         return result;
     }
 
-    private void bruteforce(List<OrderEntity> orders, BigInteger maxWeight, Set<Long> seen, Nabor result,
-                            BigInteger sumPrice, BigInteger sumWeight) {
+    private void backpackRealisation(List<OrderEntity> orders, BigInteger maxWeight, Set<Long> seen,
+                                     BackpackResult result, BigInteger sumPrice, BigInteger sumWeight) {
         boolean isLeaf = true;
         for (OrderEntity order : orders) {
             if (seen.contains(order.getId())) {
@@ -163,7 +163,8 @@ public class OrderService {
             }
 
             seen.add(order.getId());
-            bruteforce(orders, maxWeight, seen, result, sumPrice.add(item.getPrice()), sumWeight.add(item.getWeight()));
+            backpackRealisation(orders, maxWeight, seen, result, sumPrice.add(item.getPrice()),
+                    sumWeight.add(item.getWeight()));
             seen.remove(order.getId());
             isLeaf = false;
         }

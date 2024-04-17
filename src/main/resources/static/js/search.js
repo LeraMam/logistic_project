@@ -4,8 +4,6 @@ const extractSingleSelectedItem = (selectId) => {
 }
 
 const searchTable = (companies, body) => {
-    /*let order = {};
-    order.state = 'WAITING';*/
     document.getElementById("searchTableBlock").style.display = "block";
     const table = $('#userSearchTable');
     table.find('tr:not(:first)').remove();
@@ -22,16 +20,12 @@ const searchTable = (companies, body) => {
                 const tdDOP3 = $('<td></td>');
                 const tdDOP4 = $('<td></td>');
                 const button = $('<input id="companyButton" type="submit" value="Бронь" class="btn btn-primary">');
-                const backpack = {
+                const dataForBackpack = {
                     weight: Number.parseFloat($('#weight').val()),
                     price: order.intervalWay.sumPrice
                 };
-                console.log("backpack");
-                console.log(backpack);
                 button.click(() => {
-                    ajaxPOST('/order/add/item', backpack, newItem =>{
-                        console.log("newItem");
-                        console.log(newItem);
+                    ajaxPOST('/order/add/item', dataForBackpack, newItem =>{
                         ajaxPOSTWithoutResponse('/order/add/' + newItem.id, order,
                             () => showMessage("Заявка на доставку оформлена", 1000, () =>{
                             }))
@@ -63,7 +57,6 @@ const searchTable = (companies, body) => {
                 td5.append(textTransport)
 
                 tr1.append(td1, td2, td3, td4, td5, td6, td7, td8, tdDOP3, tdDOP4);
-                console.log(tr1)
                 $('#userSearchTable').append(tr1);
             });
         });
@@ -99,9 +92,7 @@ $(document).ready(() => {
         body.sumPrice = Number.parseFloat($('#price').val());
         body.sortByTime = $('#sortByTime').prop('checked');
         body.sortByPrice = $('#sortByPrice').prop('checked');
-        console.log(body);
         ajaxPOST('/about/company/all', body, companies => {
-            console.log(companies);
             searchTable(companies)
         })
     });

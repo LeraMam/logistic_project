@@ -30,7 +30,7 @@ public class TariffController {
     @PostMapping("/tariffs")
     public List<TariffEntity> getAllTariffs(
             @RequestBody(required = false) TariffEntity searchTariffEntity){
-        List<TariffEntity> filterList =  tariffService.getAllTariffs()
+        return tariffService.getAllTariffs()
                 .stream()
                 .filter(tariffEntity -> searchTariffEntity.getType() == null || tariffEntity.getType() == searchTariffEntity.getType())
                 .filter(tariffEntity -> searchTariffEntity.getStartPoint() == null || tariffEntity.getStartPoint().contains(searchTariffEntity.getStartPoint()))
@@ -40,7 +40,6 @@ public class TariffController {
                 .filter(tariffEntity -> searchTariffEntity.getDistance() == null || tariffEntity.getDistance() <= searchTariffEntity.getDistance())
                 .filter(tariffEntity -> searchTariffEntity.getTime() == null || tariffEntity.getTime() <= searchTariffEntity.getTime())
                 .collect(Collectors.toList());
-        return  filterList;
     }
     @PostMapping("/tariff/{companyId}")
     public void addTariff(@PathVariable Long companyId, @RequestBody TariffEntity tariffEntity){

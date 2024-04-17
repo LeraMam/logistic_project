@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,10 +37,10 @@ public class IntervalWayService {
         }
         IntervalWayEntity intervalWayEntity = new IntervalWayEntity();
         intervalWayEntity.setTariffs(tariffs);
-        Double sumDistance = tariffs.stream().collect(Collectors.summingDouble(TariffEntity::getDistance));
+        Double sumDistance = tariffs.stream().mapToDouble(TariffEntity::getDistance).sum();
         intervalWayEntity.setSumDistance(sumDistance);
 
-        Double sumTime = tariffs.stream().collect(Collectors.summingDouble(TariffEntity::getTime));
+        Double sumTime = tariffs.stream().mapToDouble(TariffEntity::getTime).sum();
         intervalWayEntity.setSumTime(sumTime);
 
         Double sumPrice = tariffs
@@ -78,7 +79,7 @@ public class IntervalWayService {
         intervalWayRepository.save(intervalWayEntity);
         List<IntervalWayEntity> intervalWayEntityList = wayEntity.getIntervalWays();
         for(int i = 0; i < intervalWayEntityList.size(); i++){
-            if (intervalWayEntityList.get(i).getId() == intervalWayId) intervalWayEntityList.remove(i);
+            if (Objects.equals(intervalWayEntityList.get(i).getId(), intervalWayId)) intervalWayEntityList.remove(i);
         }
         intervalWayEntityList.add(intervalWayEntity);
         wayEntity.setIntervalWays(intervalWayEntityList);
@@ -91,25 +92,25 @@ public class IntervalWayService {
         IntervalWayEntity intervalWayEntity = intervalWayRepository.findIntervalWayEntityById(intervalWayId);
         List<OrderEntity> orderEntityList = orderRepository.findAll();
         for(OrderEntity order : orderEntityList){
-            if(order.getIntervalWay().getId() == intervalWayId) throw new BadRequestException("Этот путь присутствует в заказах, его нельзя удалить");
+            if(Objects.equals(order.getIntervalWay().getId(), intervalWayId)) throw new BadRequestException("Этот путь присутствует в заказах, его нельзя удалить");
         }
         if ((wayEntity == null)||(companyEntity == null)||(intervalWayEntity == null)) throw new NotFoundException("Данные для удаления не найдены");
         List<IntervalWayEntity> intervalWayEntityList = wayEntity.getIntervalWays();
         for(int i=0; i < intervalWayEntityList.size(); i++){
-            if(intervalWayEntityList.get(i).getId() == intervalWayId){
+            if(Objects.equals(intervalWayEntityList.get(i).getId(), intervalWayId)){
                 intervalWayEntityList.remove(i);
             }
         }
         wayEntity.setIntervalWays(intervalWayEntityList);
 
         List<WayEntity> wayEntityList = companyEntity.getWays();
-        for(int i=0; i < wayEntityList.size(); i++){
-            if(wayEntityList.get(i).getId() == wayEntity.getId()){
-                wayEntityList.get(i).setId(wayEntity.getId());
-                wayEntityList.get(i).setStartPoint(wayEntity.getStartPoint());
-                wayEntityList.get(i).setEndPoint(wayEntity.getEndPoint());
-                wayEntityList.get(i).setPointNumber(wayEntity.getPointNumber());
-                wayEntityList.get(i).setIntervalWays(wayEntity.getIntervalWays());
+        for (WayEntity way : wayEntityList) {
+            if (Objects.equals(way.getId(), wayEntity.getId())) {
+                way.setId(wayEntity.getId());
+                way.setStartPoint(wayEntity.getStartPoint());
+                way.setEndPoint(wayEntity.getEndPoint());
+                way.setPointNumber(wayEntity.getPointNumber());
+                way.setIntervalWays(wayEntity.getIntervalWays());
             }
         }
         companyEntity.setWays(wayEntityList);

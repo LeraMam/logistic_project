@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class WayService {
@@ -53,7 +54,7 @@ public class WayService {
             WayEntity changedEntity = wayRepository.findWayEntityById(wayId);
             List<OrderEntity> orderEntityList = orderRepository.findAll();
             for(OrderEntity order : orderEntityList){
-                if(order.getWay().getId() == changedEntity.getId()) throw new BadRequestException("Путь используется в заказах, его нельзя изменить");
+                if(Objects.equals(order.getWay().getId(), changedEntity.getId())) throw new BadRequestException("Путь используется в заказах, его нельзя изменить");
             }
             changedEntity.setStartPoint(wayEntity.getStartPoint());
             changedEntity.setEndPoint(wayEntity.getEndPoint());
@@ -63,7 +64,7 @@ public class WayService {
             WayEntity savedEntity = wayRepository.save(changedEntity);
             List<WayEntity> waysList = companyEntity.getWays();
             for(int i = 0; i < waysList.size(); i++){
-                if(waysList.get(i).getId() == changedEntity.getId()) waysList.remove(i);
+                if(Objects.equals(waysList.get(i).getId(), changedEntity.getId())) waysList.remove(i);
             }
             waysList.add(changedEntity);
             companyEntity.setWays(waysList);
@@ -76,13 +77,13 @@ public class WayService {
         WayEntity deleteEntity = wayRepository.findWayEntityById(wayId);
         List<OrderEntity> orderEntityList = orderRepository.findAll();
         for(OrderEntity order : orderEntityList){
-            if(order.getWay().getId() == deleteEntity.getId()) throw new BadRequestException("Путь используется в заказах, его нельзя удалить");
+            if(Objects.equals(order.getWay().getId(), deleteEntity.getId())) throw new BadRequestException("Путь используется в заказах, его нельзя удалить");
         }
         List<IntervalWayEntity> emptyList = new ArrayList<>();
         deleteEntity.setIntervalWays(emptyList);
         List<WayEntity> wayEntityList = companyEntity.getWays();
         for(int i=0; i < wayEntityList.size(); i++){
-            if(wayEntityList.get(i).getId() == deleteEntity.getId()){
+            if(Objects.equals(wayEntityList.get(i).getId(), deleteEntity.getId())){
                 wayEntityList.remove(i);
             }
         }

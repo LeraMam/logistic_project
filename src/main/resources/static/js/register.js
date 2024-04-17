@@ -13,9 +13,7 @@ $(document).ready(() => {
         }
 
         ajaxPOSTWithoutResponse('/login/register', userBody, () => {
-            showMessage("Пользователь зарегистрирован ", 1000, () => {
-                //reloadUsers();
-            })
+            showMessage("Пользователь зарегистрирован ", 1000)
             document.getElementById("registerText").style.display = "block";
         })
     });

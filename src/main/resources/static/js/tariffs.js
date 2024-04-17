@@ -1,15 +1,11 @@
 
 const extractSingleSelectedItem = (selectId) => {
     const selected = $('#' + selectId).val()
-    //возвращает пустую строку если ничего не выбрано, поэтому ставим null а не пустую строку
     return selected ? selected : null;
 }
 
 const tariffsTable = (companyId) => {
     ajaxGET('/about/tariff/' + companyId, tariffs => {
-        /*$('#tariffsTable').empty();*/
-        /*console.log("tarrifs: ")
-        console.log(tariffs)*/
         const table = $('#tariffsTable');
         table.find('tr:not(:first)').remove();
         tariffs.forEach(tariff =>{
@@ -26,7 +22,6 @@ const tariffsTable = (companyId) => {
             const edit = $('<i class="fa fa-pencil-square" style="color:#00043c"></i>')
             edit.click(() => {
                 openTariffModal(tariff, (updatedTariff) => {
-                    console.log(updatedTariff);
                     ajaxPUT('/about/tariff/' + companyId + "/" + tariff.id, updatedTariff, () => {
                         showMessage("Тариф изменен", 1000, () => {
                             tariffsTable(companyId);
@@ -36,10 +31,8 @@ const tariffsTable = (companyId) => {
             })
             const del = $('<i class="fa fa-trash-o" style="color: darkred"></i>')
             del.click(() => {
-                console.log('delete button');
                 ajaxDELETE('/about/' + tariff.id + '/' + companyId, () => {
                     showMessage('Тариф удален', 1500)
-                    //tariffsTable(companyId);
                 });
             })
             tdDOP3.append(edit);
@@ -52,7 +45,6 @@ const tariffsTable = (companyId) => {
 
 const openTariffModal = (tariff = null, submitAction = (tariff) => {
 }) => {
-    console.log(tariff);
     if (!tariff.type && !tariff.price ) {
         $('#tariffModalLabel').text('Добавить тариф')
     } else {
@@ -82,19 +74,16 @@ const openTariffModal = (tariff = null, submitAction = (tariff) => {
         newTariff.price = Number.parseFloat($('#tariffModalPrice').val());
         newTariff.maxWeight = Number.parseFloat($('#tariffModalMaxWeight').val());
         submitAction(newTariff);
-        /*console.log(newTariff);*/
         $('#tariffModal').modal('hide');
     })
 }
 
 $(document).ready(() => {
 
-    ajaxGET('/login/auth' /*+ cookie.userId*/, user => {
-        console.log(user);
+    ajaxGET('/login/auth', user => {
         tariffsTable(user.company.id);
 
         $('#createTariffBtn').click(() => {
-            /* console.log("company.tariff:  " + user.company.tariff)*/
             openTariffModal(user.company.tariffs, (tariff) => {
                 ajaxPOSTWithoutResponse('/about/tariff/' + user.company.id, tariff, () => {
                     showMessage("Тариф создан", 1000, () => {

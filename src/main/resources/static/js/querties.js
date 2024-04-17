@@ -3,10 +3,6 @@ function defaultErrorHandler(jqXHR, exception) {
     console.log(jqXHR)
     console.error(exception)
     if (msg) {
-        /*if (jqXHR.status === 404) {
-            window.location.href = '/404'
-            return;
-        }*/
         showMessage(msg, 3000, () => {
             if (jqXHR.status === 401 || jqXHR.status === 403) {
                 window.location.href = '/login'
@@ -40,7 +36,7 @@ const ajaxPOST = (url, body, onSuccess = () => {
         url: url,
         data: JSON.stringify(body),
         contentType: "application/json; charset=utf-8",
-        dataType: "json",   //ожидает ответ от сервера в json формате
+        dataType: "json",
         encode: true,
         success: onSuccess,
         error: defaultErrorHandler,

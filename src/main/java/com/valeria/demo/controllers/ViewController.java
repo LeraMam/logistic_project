@@ -8,12 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class ViewController {
-    private final UserService userService;
-
-    public ViewController(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping("/about")
     public ModelAndView aboutView(){
         String name = "About company";
@@ -22,8 +16,7 @@ public class ViewController {
         modelAndView.setViewName("about_company");
         return modelAndView;
     }
-
-    @GetMapping("/tariffs")
+   @GetMapping("/tariffs")
     public ModelAndView tariffsView(){
         String name = "Point tariffs";
         ModelAndView modelAndView = new ModelAndView();
@@ -31,7 +24,6 @@ public class ViewController {
         modelAndView.setViewName("tariffs");
         return modelAndView;
     }
-
     @GetMapping("/account")
     public ModelAndView accountView(){
         String name = "Account";

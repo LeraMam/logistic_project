@@ -39,23 +39,6 @@ public class UserService {
         return userRepository.findUserEntityByLogin(login);
     }
 
-    /*public UserEntity loginOrRegister(UserEntity userEntity){
-        UserEntity existingUser = userRepository.findUserEntityByLogin(userEntity.getLogin());
-        if (existingUser != null) {
-            SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(userEntity.getLogin(), userEntity.getPassword())
-            );
-            return existingUser;
-        }
-        else{
-            UserEntity newUser = addNewUser(userEntity);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(newUser.getLogin(), newUser.getPassword());
-            Authentication authenticated = authenticationManager.authenticate(authentication);
-            SecurityContextHolder.getContext().setAuthentication(authenticated);
-            return userEntity;
-        }
-    }*/
-
     public UserEntity addNewUser(UserEntity userEntity){
         if(userRepository.findUserEntityByLogin(userEntity.getLogin()).isPresent()){
             throw new BadRequestException("Пользователь с логином " + userEntity.getLogin() + " уже существует");
@@ -67,7 +50,6 @@ public class UserService {
         }
         String encodedPassword = passwordEncoder.encode(userEntity.getPassword());
         userEntity.setPassword(encodedPassword);
-        UserEntity addedEntity = userRepository.save(userEntity);
-        return addedEntity;
+        return userRepository.save(userEntity);
     }
 }

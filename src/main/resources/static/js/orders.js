@@ -2,7 +2,7 @@ const searchUserOrdersTable = (orders) => {
     document.getElementById("userOrdersTableBlock").style.display = "block";
     const table = $('#userOrdersSearchTable');
     table.find('tr:not(:first)').remove();
-    ajaxGET('/order/optimisation',nabor => {
+    ajaxGET('/order/optimisation',backpackResult => {
         orders.forEach(order =>{
             const tr1 = $('<tr></tr>');
             const td1 = $('<td>' + order.id + '</td>');
@@ -26,9 +26,9 @@ const searchUserOrdersTable = (orders) => {
             })
             textPoints += order.intervalWay.tariffs[order.intervalWay.tariffs.length - 1].endPoint;
             td5.append(textPoints)
-            for(let i = 0; i < nabor.results.length; i++){
+            for(let i = 0; i < backpackResult.results.length; i++){
                 td9.empty();
-                if(nabor.results[i] === order.id) {
+                if(backpackResult.results[i] === order.id) {
                     td9.append("1");
                     break;
                 }
@@ -50,7 +50,6 @@ const searchUserOrdersTable = (orders) => {
                 });
                 td10.append(button);
             }
-
             tr1.append(td1, td2, td3, td4, td5, td6, td7, td8, td9, td10);
             $('#userOrdersSearchTable').append(tr1);
         })
@@ -59,7 +58,6 @@ const searchUserOrdersTable = (orders) => {
 
 $(document).ready(() => {
     ajaxGET('/order/companies',orders => {
-        console.log(orders);
         searchUserOrdersTable(orders)
     })
 });

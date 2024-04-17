@@ -19,13 +19,12 @@ import java.util.*;
 public class TariffService {
     private final TariffRepository tariffRepository;
     private final CompanyRepository companyRepository;
-    private final WayRepository wayRepository;
     private final IntervalWayRepository intervalWayRepository;
     @Autowired
-    public TariffService(TariffRepository tariffRepository, CompanyRepository companyRepository, WayRepository wayRepository, IntervalWayRepository intervalWayRepository) {
+    public TariffService(TariffRepository tariffRepository, CompanyRepository companyRepository,
+                         IntervalWayRepository intervalWayRepository) {
         this.tariffRepository = tariffRepository;
         this.companyRepository = companyRepository;
-        this.wayRepository = wayRepository;
         this.intervalWayRepository = intervalWayRepository;
     }
 
@@ -37,55 +36,16 @@ public class TariffService {
         else return Collections.emptyList();
     }
 
-    public List<TariffEntity> getAllTariffsForWay(Long wayId){
-        WayEntity wayEntity = wayRepository.findWayEntityById(wayId);
-        if(wayEntity!=null){
-            List<IntervalWayEntity> intervalWayEntityList = wayEntity.getIntervalWays();
-            List<TariffEntity> tariffEntityList = new ArrayList<>();
-            for(IntervalWayEntity intervalWayEntity : intervalWayEntityList){
-                List<TariffEntity> newTariffEntityList = intervalWayEntity.getTariffs();
-                tariffEntityList.addAll(newTariffEntityList);
-            }
-            return tariffEntityList;
-        }
-        else return Collections.emptyList();
-    }
-
     public List<TariffEntity> getAllTariffsForIntervalWay(Long intervalWayId){
         IntervalWayEntity intervalWayEntity = intervalWayRepository.findIntervalWayEntityById(intervalWayId);
         if(intervalWayEntity != null){
-            List<TariffEntity> tariffEntityList = intervalWayEntity.getTariffs();
-            return tariffEntityList;
+            return intervalWayEntity.getTariffs();
         }
         else return Collections.emptyList();
     }
 
-    /*public List<TariffEntity> getAllTariffsForCompany(Long companyId){
-        CompanyEntity companyEntity = companyRepository.findCompanyEntityById(companyId);
-        List<WayEntity> wayEntityList = new ArrayList<>();
-        if(companyEntity!=null){
-            wayEntityList = companyEntity.getWays();
-        }
-        Set<TariffEntity> uniqueTariffEntities = new HashSet<>();
-        for (WayEntity wayEntity : wayEntityList) {
-            List<IntervalWayEntity> intervalWayEntityList = wayEntity.getIntervalWays();
-
-            for (IntervalWayEntity intervalWayEntity : intervalWayEntityList) {
-                List<TariffEntity> tariffEntityList = intervalWayEntity.getTariffs();
-                uniqueTariffEntities.addAll(tariffEntityList);
-            }
-        }
-        List<TariffEntity> resultTariffEntityList = new ArrayList<>(uniqueTariffEntities);
-        System.out.println(resultTariffEntityList);
-        return resultTariffEntityList;
-    }*/
-
     public List<TariffEntity> getAllTariffs(){
         return tariffRepository.findAll();
-    }
-
-    public TariffEntity findTariffEntityById(Long id){
-        return tariffRepository.findTariffEntityById(id);
     }
 
     public boolean isTariffExists(Long id){
@@ -128,7 +88,7 @@ public class TariffService {
         for(WayEntity wayEntity : companyEntity.getWays()){
             for(IntervalWayEntity intervalWayEntity : wayEntity.getIntervalWays()){
                 for(TariffEntity tariffEntity : intervalWayEntity.getTariffs()){
-                    if(tariffEntity.getId() == tariffId){
+                    if(Objects.equals(tariffEntity.getId(), tariffId)){
                         throw new BadRequestException("Тариф используются в путях, его нельзя удалить");
                     }
                 }
@@ -136,13 +96,12 @@ public class TariffService {
         }
         List<TariffEntity> tariffEntityList = companyEntity.getTariffs();
         for(int i=0; i < tariffEntityList.size(); i++){
-            if(tariffEntityList.get(i).getId() == tariffId){
+            if(Objects.equals(tariffEntityList.get(i).getId(), tariffId)){
                 tariffEntityList.remove(i);
             }
         }
         companyEntity.setTariffs(tariffEntityList);
         companyRepository.save(companyEntity);
-
         tariffRepository.deleteById(tariffId);
     }
 }

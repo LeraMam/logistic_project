@@ -32,11 +32,8 @@ public class UserController {
     public UserEntity getUserByAuth(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        /*System.out.println("username from autentificate");
-        System.out.println(username);*/
         Optional<UserEntity> loginUser = userService.getUserByLogin(username);
         UserEntity user = loginUser.get();
-        /*System.out.println(user);*/
         return user;
     }
 

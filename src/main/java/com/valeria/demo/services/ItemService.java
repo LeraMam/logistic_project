@@ -13,7 +13,6 @@ public class ItemService {
     }
 
     public ItemEntity addNewItem(ItemEntity itemEntity){
-
         return itemRepository.save(itemEntity);
     }
 }
