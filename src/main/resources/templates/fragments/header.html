@@ -4,28 +4,25 @@
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
                     <li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
-                        <a href="/account" class="nav-link">Account</a>
+                        <a href="/account" class="nav-link">Аккаунт</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_USER')" class="nav-item" >
-                        <a href="/search" class="nav-link">Search</a>
+                        <a href="/search" class="nav-link">Подбор</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_COMPANY')" class="nav-item">
-                        <a href="/about" class="nav-link">About company</a>
+                        <a href="/about" class="nav-link">Профиль компании</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_COMPANY')" class="nav-item">
-                        <a href="/tariffs" class="nav-link">Point tariffs</a>
+                        <a href="/tariffs" class="nav-link">Тарифы</a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_COMPANY')" class="nav-item">
-                        <a href="/orders" class="nav-link">Orders</a>
+                        <a href="/orders" class="nav-link">Заказы</a>
                     </li>
                     <li sec:authorize="isAnonymous()" class="nav-item">
-                        <a href="/login" class="nav-link">Login</a>
+                        <a href="/login" class="nav-link">Вход</a>
                     </li>
-                   <!-- <li sec:authorize="isAuthenticated()">
-                        <a onclick="" href="/login"><i class="fa fa-sign-out"></i> Выход</a>
-                    </li>-->
                     <li sec:authorize="isAuthenticated()" class="nav-item">
-                        <a class="nav-link" onclick="document.getElementById('logout-form').submit();" href="#">Logout</a>
+                        <a class="nav-link" onclick="document.getElementById('logout-form').submit();" href="#">Выход</a>
                         <form id="logout-form" action="/logout" method="post" style="display: none;"></form>
                     </li>
                 </ul>

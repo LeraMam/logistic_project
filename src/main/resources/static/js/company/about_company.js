@@ -4,14 +4,14 @@ const companyBlock = (company) => {
     if(company.name && company.email && company.maxTC && company.description){
         const name = $('<h4 class="font-weight-bold">' + company.name + '</h4>');
         const email = $('<h6 class="font-weight-bold">' + company.email + '</h6>');
-        const maxTC = $('<p>' + "Максимальный ТС: " + company.maxTC + '</p>');
+        const maxTC = $('<p>' + "Максимальный ТС: " + company.maxTC + " тонн" + '</p>');
         const description = $('<p>' + company.description + '</p>');
         $('#companyInfoBlock').append(name, email, description, maxTC,);
     }
 }
 
 const waysTable = (companyId) => {
-    ajaxGET('/way/' + companyId, ways => {  //нужно читать тарифы только для компании, а не все
+    ajaxGET('/way/' + companyId, ways => {
         const table = $('#waysTable');
         table.find('tr:not(:first)').remove();
         ways.forEach(way =>{

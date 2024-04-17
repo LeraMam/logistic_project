@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ViewController {
     @GetMapping("/about")
     public ModelAndView aboutView(){
-        String name = "About company";
+        String name = "Профиль компании";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("pageTitle", name);
         modelAndView.setViewName("about_company");
@@ -18,7 +18,7 @@ public class ViewController {
     }
    @GetMapping("/tariffs")
     public ModelAndView tariffsView(){
-        String name = "Point tariffs";
+        String name = "Тарифы";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("pageTitle", name);
         modelAndView.setViewName("tariffs");
@@ -26,7 +26,7 @@ public class ViewController {
     }
     @GetMapping("/account")
     public ModelAndView accountView(){
-        String name = "Account";
+        String name = "Аккаунт";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("pageTitle", name);
         modelAndView.setViewName("account");
@@ -34,7 +34,7 @@ public class ViewController {
     }
     @GetMapping("/search")
     public ModelAndView countView(){
-        String name = "Search";
+        String name = "Подбор";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("pageTitle", name);
         modelAndView.setViewName("search");
@@ -42,7 +42,7 @@ public class ViewController {
     }
     @GetMapping("/login")
     public ModelAndView loginView(){
-        String name = "Login";
+        String name = "Вход";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("pageTitle", name);
         modelAndView.setViewName("login");
@@ -50,7 +50,7 @@ public class ViewController {
     }
     @GetMapping("/register")
     public ModelAndView registerView(){
-        String name = "Registration";
+        String name = "Регистрация";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("pageTitle", name);
         modelAndView.setViewName("register");
@@ -59,7 +59,7 @@ public class ViewController {
 
     @GetMapping("/orders")
     public ModelAndView orderView(){
-        String name = "Orders";
+        String name = "Заказы";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("pageTitle", name);
         modelAndView.setViewName("orders");

@@ -109,6 +109,7 @@ public class OrderService {
         changedOrder.setId(orderEntity.getId());
         changedOrder.setState(orderEntity.getState());
         changedOrder.setUser(orderEntity.getUser());
+        changedOrder.setItem(orderEntity.getItem());
         changedOrder.setCompany(orderEntity.getCompany());
         changedOrder.setWay(orderEntity.getWay());
         changedOrder.setIntervalWay(orderEntity.getIntervalWay());
